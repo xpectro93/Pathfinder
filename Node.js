@@ -10,8 +10,11 @@ class Node {
         this.h = HEIGHT/ 31;
         this.isWall = isWall;
         this.neighbors = [];
+        this.previous;
     }
 
+
+    //grid is the matrix of Nodes
     addNeighbors (grid) {
         let moves = [[-1,0],[0,1],[1,0],[0,-1]];
 
