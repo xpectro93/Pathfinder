@@ -55,7 +55,6 @@ class AStar {
             this.closedSet.add(current);
             let currentNeighbors = current.getNeighbors(this.grid);
 
-            console.log(currentNeighbors)
             for(let neighbor of currentNeighbors) {
                 if(this.closedSet.has(neighbor)) continue;
 
@@ -81,10 +80,12 @@ class AStar {
     constructPath () {
         let tempPath = [];
         let currentNode = this.lastNode
-        while(currentNode.previous) {
-            tempPath.push(currentNode);
+        while(currentNode) {
+            // tempPath.unshift([currentNode.x,currentNode.y]);
+            tempPath.push(currentNode)
             currentNode = currentNode.previous;
         }
+        
         return tempPath;
     }
 }

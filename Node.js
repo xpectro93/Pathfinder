@@ -6,8 +6,9 @@ class Node {
         this.f = 0;
         this.h = 0;
         this.g = 0;
-        this.w = WIDTH/28;
-        this.h = HEIGHT/ 31;
+
+        this.width = WIDTH/28;
+        this.height = HEIGHT/31;
         this.isWall = isWall;
         this.neighbors = [];
         this.previous;
@@ -47,8 +48,8 @@ class Node {
             }
         }
         
-        
-        ctx.fillRect(this.x * this.w, this.y * this.h, this.w,this.h);
+        // debugger
+        ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
     }
 
 }

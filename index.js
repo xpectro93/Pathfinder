@@ -41,6 +41,16 @@ const dungeon = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ]
 
+// const dungeon = [
+//     [1,1,1,1,1,1,1],
+//     [1,0,0,1,1,1,1],
+//     [1,0,1,1,1,1,1],
+//     [1,0,1,0,0,0,1],
+//     [1,0,0,0,1,0,1],
+//     [1,0,0,1,0,0,1],
+//     [1,1,1,1,1,1,1]
+// ]
+
 let objGrid = []
 dungeon.forEach((row, y) => {
     let objRow = []
@@ -61,24 +71,47 @@ dungeon.forEach((row, y) => {
 
 
 let start = objGrid[1][1];
-let end = objGrid[23][14];
+let end = objGrid[20][15];
+
 
 
 let kappa = new AStar(start, end,objGrid);
 kappa.findPath();
 
-const draw = () => {
+const draw = (path) => {
+
+      // console.log('this is happening');
     objGrid.forEach(row => {
         row.forEach(box => {
-            box.draw(ctx);
+            // debugger
+            box.draw(ctx)
         })
     })
+    path.forEach(node => {
+        let x = node.x;
+        let y = node.y;
+        objGrid[y][x].draw(ctx,"red")
+    })
 
-    console.log('this is happening');
+  
+
 
 
 
 }
+
+// objGrid[1][1].draw(ctx,"red")
+// objGrid[1][2].draw(ctx,"red")
+// objGrid[1][4].draw(ctx,"red")
+// objGrid[2][4].draw(ctx,"red")
+// objGrid[3][4].draw(ctx,"red")
+// objGrid[3][3].draw(ctx,"red")
+// objGrid[4][3].draw(ctx,"red")
+// objGrid[5][3].draw(ctx,"red")
+// objGrid[5][4].draw(ctx,"red")
+// objGrid[5][5].draw(ctx,"red")
+// objGrid[4][5].draw(ctx,"red")
+// debugger
 let path = kappa.constructPath()
 console.log(path)
-draw()
+draw(path)
