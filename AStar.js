@@ -9,8 +9,8 @@ class AStar {
 
         //used to reverse path;
         this.lastNode = start;
-    }
-
+    };
+    //Manhattan distance 
     getHeuristic(current, neighbor) {
         let newX = Math.abs(current.x - neighbor.x);
         let newY = Math.abs(current.y - neighbor.y);
@@ -56,12 +56,14 @@ class AStar {
             let currentNeighbors = current.getNeighbors(this.grid);
 
             for(let neighbor of currentNeighbors) {
+
+                //if neighbor is part of closed set, then skip 
                 if(this.closedSet.has(neighbor)) continue;
 
                 //possible new g value for the neighbor of current Node;
                 let tempG = current.g + this.getHeuristic(current, neighbor);
                 if(tempG < neighbor.g || !this.openSet.includes(neighbor)) {
-                    console.log(tempG, neighbor.g)
+
                     neighbor.g = tempG;
                     neighbor.h = this.getHeuristic(neighbor, this.target);
                     neighbor.previous = current;
@@ -75,7 +77,7 @@ class AStar {
 
         }
         
-        console.log('no path')
+        console.log('no path');n 
     }
 
 

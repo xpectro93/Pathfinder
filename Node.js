@@ -2,10 +2,16 @@ class Node {
     constructor(x,y, isWall,WIDTH,HEIGHT) {
         this.x = x;
         this.y = y;
-
-        this.f = 0;
+        
+        //distance from end node;
         this.h = 0;
+        //distance from starting node;
         this.g = 0;
+        
+        // f = g + h
+        this.f = 0;
+
+
 
         this.width = WIDTH/28;
         this.height = HEIGHT/31;
@@ -25,9 +31,9 @@ class Node {
             let nc = c + this.x;
 
             if(grid[nr] && grid[nr][nc]!== undefined) {
+
+                //if it is not a wall, then we add this to our valid neighbors array;
                 if(!grid[nr][nc].isWall) {
-
-
 
                     this.neighbors.push(grid[nr][nc]);
                 }
