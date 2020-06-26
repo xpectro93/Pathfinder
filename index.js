@@ -69,9 +69,10 @@ dungeon.forEach((row, y) => {
 });
 
 
-
+let pacX = 26
+let pacY = 30
 let start = objGrid[1][1];
-let end = objGrid[20][15];
+let end = objGrid[pacY][pacX];
 
 
 
@@ -114,7 +115,7 @@ ctx.fillStyle = 'red';
 ctx.fillRect(1 * 32.28,18.93,32.28, 18.93)
 
 ctx.fillStyle = 'yellow';
-ctx.fillRect(15 * 32.28, 20*18.93,32.28, 18.93) 
+ctx.fillRect(pacX * 32.28, pacY*18.93,32.28, 18.93) 
 
 let i = 0;
 let stopTime = setInterval(() => {

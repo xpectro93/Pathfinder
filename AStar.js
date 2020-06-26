@@ -74,6 +74,8 @@ class AStar {
 
 
         }
+        
+        console.log('no path')
     }
 
 
