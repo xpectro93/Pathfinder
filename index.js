@@ -78,7 +78,7 @@ let end = objGrid[20][15];
 let kappa = new AStar(start, end,objGrid);
 kappa.findPath();
 
-const draw = (path) => {
+const draw = () => {
 
       // console.log('this is happening');
     objGrid.forEach(row => {
@@ -87,11 +87,7 @@ const draw = (path) => {
             box.draw(ctx)
         })
     })
-    path.forEach(node => {
-        let x = node.x;
-        let y = node.y;
-        objGrid[y][x].draw(ctx,"red")
-    })
+    
 
   
 
@@ -112,6 +108,22 @@ const draw = (path) => {
 // objGrid[5][5].draw(ctx,"red")
 // objGrid[4][5].draw(ctx,"red")
 // debugger
-let path = kappa.constructPath()
-console.log(path)
+let path = kappa.constructPath();
 draw(path)
+ctx.fillStyle = 'red';
+ctx.fillRect(1 * 32.28,18.93,32.28, 18.93)
+
+ctx.fillStyle = 'yellow';
+ctx.fillRect(15 * 32.28, 20*18.93,32.28, 18.93) 
+
+let i = 0;
+let stopTime = setInterval(() => {
+    let node = path[i];
+    let x = node.x;
+    let y = node.y;
+    objGrid[y][x].draw(ctx,"red")
+    i++;
+    if(i === path.length) clearInterval(stopTime)
+},50)
+
+console.log(path)

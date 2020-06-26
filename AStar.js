@@ -80,13 +80,13 @@ class AStar {
     constructPath () {
         let tempPath = [];
         let currentNode = this.lastNode
+
         while(currentNode) {
             // tempPath.unshift([currentNode.x,currentNode.y]);
             tempPath.push(currentNode)
             currentNode = currentNode.previous;
         }
-        
-        return tempPath;
+        return tempPath.reverse();
     }
 }
 export default AStar;
