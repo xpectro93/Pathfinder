@@ -47,10 +47,10 @@ dungeon.forEach((row, y) => {
     row.forEach((box, x) => {
     
         if(box === 1) {
-            objRow.push(new GNode(x,y,true));
+            objRow.push(new Node(x,y,true,WIDTH,HEIGHT));
 
         }else {
-            objRow.push(new GNode(x,y,false));
+            objRow.push(new Node(x,y,false,WIDTH,HEIGHT));
         }
 
 
@@ -63,17 +63,10 @@ dungeon.forEach((row, y) => {
 let start = objGrid[1][1];
 let end = objGrid[23][14];
 
-let openSet = [start];
-let closedSet = [];
 
+let kappa = new AStar(start, end,objGrid);
+kappa.findPath();
 
-function removeFrom(arr,el) {
-    for(let i = arr.length - 1; i >= 0; i--) {
-        if(arr[i] === el) {
-            arr.splice(i,1)
-        } 
-    }
-}
 const draw = () => {
     objGrid.forEach(row => {
         row.forEach(box => {
@@ -81,46 +74,11 @@ const draw = () => {
         })
     })
 
-    openSet.forEach(node =>{
-        node.draw(ctx,"red")
-    });
     console.log('this is happening');
 
 
 
 }
-console.log(objGrid)
+let path = kappa.constructPath()
+console.log(path)
 draw()
-// let time = setInterval(() => {
-//     draw()
-//     if(openSet.length > 0) {
-
-//         let wIdx = 0;
-//         for(let i = 0; i < openSet.length; i++) {
-//             if(openSet.f < openSet[wIdx].f) {
-//                 wIdx = i;
-            
-//             }
-
-//         }
-
-//         let current = openSet[wIdx];
-//         if(openSet[wIdx] === end) {
-//             console.log('found');
-//         }
-
-//         removeFrom(openSet, current);
-//         closedSet.push(current);
-
-
-
-
-
-
-
-
-//     } 
-
-
-
-// }, 1000)

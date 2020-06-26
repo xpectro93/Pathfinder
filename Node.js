@@ -1,5 +1,5 @@
 class Node {
-    constructor(x,y, isWall) {
+    constructor(x,y, isWall,WIDTH,HEIGHT) {
         this.x = x;
         this.y = y;
 
@@ -15,22 +15,25 @@ class Node {
 
 
     //grid is the matrix of Nodes
-    addNeighbors (grid) {
+    getNeighbors (grid) {
         let moves = [[-1,0],[0,1],[1,0],[0,-1]];
 
-        for (let move in moves) {
+        for (let move of moves) {
             const [r,c] = move;
             let nr = r + this.y;
             let nc = c + this.x;
 
             if(grid[nr] && grid[nr][nc]!== undefined) {
                 if(!grid[nr][nc].isWall) {
+
+
+
                     this.neighbors.push(grid[nr][nc]);
                 }
             }
         }
         
-        
+        return this.neighbors
     }
 
     draw(ctx,col) {
