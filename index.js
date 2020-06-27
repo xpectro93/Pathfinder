@@ -140,18 +140,16 @@ for (let y = 0; y < 50; y++) {
     }
     drawingGrid.push(drawingRow);
 }
+let isDrawing = false;
+canvas.addEventListener('mousemove', changeToWall);
+canvas.addEventListener('mousedown', e => isDrawing = true);
+canvas.addEventListener('mouseup', e => isDrawing = false);
 
-canvas.addEventListener('click', e => {
-    // console.table({
-    //     y:window.innerHeight,
-    //     x:window.innerWidth,
-    //     mx: e.offsetX,
-    //     my: e.offsetY
-    // })
-    let tx = Math.floor(e.offsetX / w);
-    let ty = Math.floor(e.offsetY / h);
-    drawingGrid[ty][tx].draw(ctx)
+function changeToWall(e) {
+    if(isDrawing) {
+        let tx = Math.floor(e.offsetX / w);
+        let ty = Math.floor(e.offsetY / h);
+        drawingGrid[ty][tx].draw(ctx)
 
-})
-
-
+    }
+}

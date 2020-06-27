@@ -14,7 +14,6 @@ body {
 #root {
     width:100vmin;
     height:100vmin;
-    display:grid;
     background-color:white;
     grid-template-rows: repeat(28, 1fr);
     grid-template-columns: repeat(28,1fr);
