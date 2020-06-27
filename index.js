@@ -114,8 +114,9 @@ class Color {
         this.height = height;
     }
     draw(ctx) {
+        // debugger
         ctx.fillStyle = "black";
-        ctx.fillRect(x * width, y * height, width, height);
+        ctx.fillRect(this.x * this.width, this.y * this.height, this.width, this.height);
     }
 }
 
@@ -141,13 +142,16 @@ for (let y = 0; y < 50; y++) {
 }
 
 canvas.addEventListener('click', e => {
-    console.table({
-        y:window.innerHeight,
-        x:window.innerWidth,
-        mx: e.offsetX / 50,
-        my: e.pageY
-    })
-    console.log(canvas.height, canvas.height);
+    // console.table({
+    //     y:window.innerHeight,
+    //     x:window.innerWidth,
+    //     mx: e.offsetX,
+    //     my: e.offsetY
+    // })
+    let tx = Math.floor(e.offsetX / w);
+    let ty = Math.floor(e.offsetY / h);
+    drawingGrid[ty][tx].draw(ctx)
 
 })
+
 
