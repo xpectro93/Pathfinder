@@ -1,0 +1,22 @@
+body {
+    height:100vh;
+    width:100vw;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items:center;
+    margin:0;
+    background-color:rgb(14,14,14)
+}
+
+
+/* this is the canvas */
+#root {
+    width:100vmin;
+    height:100vmin;
+    display:grid;
+    background-color:white;
+    grid-template-rows: repeat(28, 1fr);
+    grid-template-columns: repeat(28,1fr);
+    
+} 

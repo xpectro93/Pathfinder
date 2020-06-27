@@ -51,6 +51,7 @@ class AStar {
                 return;
             }
 
+            //remove from openSet once we have done find
             this.openSet = this.openSet.filter(node => node !== current);
             this.closedSet.add(current);
             let currentNeighbors = current.getNeighbors(this.grid);
@@ -62,12 +63,20 @@ class AStar {
 
                 //possible new g value for the neighbor of current Node;
                 let tempG = current.g + this.getHeuristic(current, neighbor);
+
+                //check if new path to neighbor is shorter OR if neighbor has never been visited.
+                // so we can their g and h values
                 if(tempG < neighbor.g || !this.openSet.includes(neighbor)) {
 
+                    //update g, h, f values
                     neighbor.g = tempG;
                     neighbor.h = this.getHeuristic(neighbor, this.target);
+                    neighbor.f = neighbor.g + neighbor.f;
+
+                    //create a link to later use as Linked list to create path
                     neighbor.previous = current;
 
+                    //add to queue to items to be explored
                     if(!this.openSet.includes(neighbor)) this.openSet.push(neighbor);
                 }
             };
@@ -77,7 +86,7 @@ class AStar {
 
         }
         
-        console.log('no path');n 
+        console.log('no path',this.lastNode);
     }
 
 
