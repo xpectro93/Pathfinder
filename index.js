@@ -4,6 +4,9 @@ import AStar from './AStar.js';
 let canvas = document.getElementById('root');
 let ctx = canvas.getContext('2d');
 
+let submit = document.getElementById('submit');
+
+console.log(submit)
 let WIDTH = canvas.width = window.innerWidth;
 let HEIGHT = canvas.height = WIDTH;
 
@@ -61,8 +64,7 @@ const dungeon = [
 
 // let pacX = 15
 // let pacY = 17
-// let start = objGrid[1][1];
-// let end = objGrid[pacY][pacX];
+
 
 
 // let kappa = new AStar(start, end,objGrid);
@@ -106,21 +108,21 @@ const dungeon = [
 // },50)
 
 // console.log(path);
-class Color {
-    constructor(x,y,width,height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-    draw(ctx) {
-        // debugger
-        ctx.fillStyle = "black";
-        ctx.fillRect(this.x * this.width, this.y * this.height, this.width, this.height);
-    }
-}
+// class Color {
+//     constructor(x,y,width,height) {
+//         this.x = x;
+//         this.y = y;
+//         this.width = width;
+//         this.height = height;
+//     }
+//     draw(ctx) {
+//         // debugger
+//         ctx.fillStyle = "black";
+//         ctx.fillRect(this.x * this.width, this.y * this.height, this.width, this.height);
+//     }
+// }
 
-ctx.strokeStyle = 'green';
+// ctx.strokeStyle = 'green';
 
 let w = WIDTH / 50;
 let h = HEIGHT / 50;
@@ -133,23 +135,52 @@ for (let y = 0; y < 50; y++) {
         ctx.strokeStyle = 'black';
         //x,y,w,h
         ctx.strokeRect(x * w, y * h, w, h);
-        let node = new Color(x,y,w,h);
+        let node = new Node(x,y,false,w,h);
+        // let node = new Color(x,y,false,w,h);
 
         drawingRow.push(node);
 
     }
     drawingGrid.push(drawingRow);
 }
+
+
+
+
+
+
+
 let isDrawing = false;
 canvas.addEventListener('mousemove', changeToWall);
 canvas.addEventListener('mousedown', e => isDrawing = true);
-canvas.addEventListener('mouseup', e => isDrawing = false);
+canvas.addEventListener('mouseup', e => {
+    
+    console.log(drawingGrid);
+    isDrawing = false
+});
+submit.addEventListener('click', e => {
+    e.preventDefault();
+    let start = drawingGrid[1][1];
+    let end = drawingGrid[45][45];
+    let newSearch = new AStar(start, end,drawingGrid);
+     newSearch.findPath();
+    let path = newSearch.constructPath();
+
+    console.log(path)
+
+    path.forEach(node => {
+        node.draw(ctx)
+    })
+})
+
 
 function changeToWall(e) {
     if(isDrawing) {
         let tx = Math.floor(e.offsetX / w);
         let ty = Math.floor(e.offsetY / h);
+        drawingGrid[ty][tx].isWall = true;
         drawingGrid[ty][tx].draw(ctx)
 
     }
 }
+

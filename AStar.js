@@ -47,7 +47,7 @@ class AStar {
             if(this.target === current) {
 
                 console.log('Target has been found');
-                this.constructPath();
+                // this.constructPath();
                 return;
             }
 

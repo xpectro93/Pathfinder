@@ -13,8 +13,8 @@ class Node {
 
 
 
-        this.width = WIDTH/28;
-        this.height = HEIGHT/31;
+        this.width = WIDTH;
+        this.height = HEIGHT;
         this.isWall = isWall;
         this.neighbors = [];
         this.previous;
