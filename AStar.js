@@ -53,6 +53,7 @@ class AStar {
 
             //remove from openSet once we have done find
             this.openSet = this.openSet.filter(node => node !== current);
+            current.visited = true;
             this.closedSet.add(current);
             let currentNeighbors = current.getNeighbors(this.grid);
 

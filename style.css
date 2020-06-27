@@ -1,4 +1,5 @@
 body {
+    margin:0px;
     height:100vh;
     width:100vw;
     display:flex;
@@ -15,7 +16,5 @@ body {
     width:100vmin;
     height:100vmin;
     background-color:white;
-    grid-template-rows: repeat(28, 1fr);
-    grid-template-columns: repeat(28,1fr);
     
 } 
