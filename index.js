@@ -4,9 +4,6 @@ import AStar from './AStar.js';
 let canvas = document.getElementById('root');
 let ctx = canvas.getContext('2d');
 
-let submit = document.getElementById('submit');
-
-console.log(submit)
 let WIDTH = canvas.width = window.innerWidth;
 let HEIGHT = canvas.height = window.innerHeight;
 
@@ -44,8 +41,8 @@ const dungeon = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ]
 
-let w = WIDTH / 50;
-let h = HEIGHT / 50;
+let w = (WIDTH / 50);
+let h = (HEIGHT / 50);
 
 let drawingGrid = [];
 
@@ -76,7 +73,7 @@ canvas.addEventListener('mousedown', e => isDrawing = true);
 canvas.addEventListener('mouseup', e => {
     isDrawing = false
 });
-window.addEventListener('click', e => {
+canvas.addEventListener('dblclick', e => {
     e.preventDefault();
     let start = drawingGrid[1][1];
     let end = drawingGrid[45][45];
@@ -91,13 +88,34 @@ window.addEventListener('click', e => {
     })
 })
 
+function collision (mouse, box) {
+    debugger
+    let LRCheck = (mouse.x > box.x && mouse.x < (box.x + box.width));
+    // let UDCheck = (mouse.y > box.y && mouse.y < (box.y + box.height));
+    //&& UDCheck
+    return LRCheck ;
+}
 
 function changeToWall(e) {
+
     if(isDrawing) {
-        let tx = Math.floor(e.offsetX / w);
+        let tx = Math.floor(e.offsetX / h);
         let ty = Math.floor(e.offsetY / h);
-        console.log(tx,ty)
+        let mouse = { x: e.offsetX, y:e.offsetY};
+
+        // for(let y = 0; y < drawingGrid.length; y++) {
+        //     for(let x = 0; x < drawingGrid[0].length; x++) {
+        //         let box = drawingGrid[y][x]
+
+        //         if(collision(mouse,box)) {
+        //             drawingGrid[y][x].isWall = true;
+        //             drawingGrid[y][x].draw(ctx)
+        //         }
+        //     }
+        // }
+        console.log(drawingGrid[ty][tx],tx,ty)
         drawingGrid[ty][tx].isWall = true;
+        
         drawingGrid[ty][tx].draw(ctx)
 
     }

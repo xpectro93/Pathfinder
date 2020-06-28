@@ -59,8 +59,6 @@ class Node {
         ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
     }
     drawPath(ctx) {
-       
-        
         ctx.fillStyle = `rgb(0,255,0)`;
         // debugger
         ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
