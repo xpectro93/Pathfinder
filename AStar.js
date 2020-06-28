@@ -24,6 +24,7 @@ class AStar {
         while(this.openSet.length) {
             //initialize at 0 because is the first item in the queue;
             let lowestFIndex = 0;
+            console.log('loop')
             for(let i = 0; i < this.openSet.length;i++) {
 
                 if(this.openSet[lowestFIndex].f > this.openSet[i].f) {
@@ -31,8 +32,9 @@ class AStar {
                 }
 
                 //check if a Node in openSet has Lower f than current lowest f
-                if(this.openSet[lowestFIndex].f <= this.openSet[i].f) {
-                    if(this.openSet[lowestFIndex].h > this.openSet[i].h) {
+                if(this.openSet[lowestFIndex].f === this.openSet[i].f) {
+                    if(this.openSet[lowestFIndex].h >= this.openSet[i].h) {
+                        console.log('deciding')
                         lowestFIndex = i;
                     }
                 }

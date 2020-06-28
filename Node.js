@@ -18,7 +18,6 @@ class Node {
         this.isWall = isWall;
         this.neighbors = [];
         this.previous;
-        this.visited = true;
     }
 
 
@@ -54,12 +53,12 @@ class Node {
         // debugger
         ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
     }
-    drawPath(ctx) {
-        if(this.visited) {
+    drawPath(ctx,color) {
+  
 
-            ctx.fillStyle = `rgb(0,255,0)`;
+            ctx.fillStyle = color;
             ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
-        }
+        
     }
 
 }
