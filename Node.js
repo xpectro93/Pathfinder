@@ -44,24 +44,22 @@ class Node {
         return this.neighbors
     }
 
-    draw(ctx,col) {
-        if(col ==="red") {
+    draw(ctx) {
+        if(!this.isWall) {
             ctx.fillStyle = `rgb(255,0,0)`;
         }else{
-            if(this.isWall) {
-                ctx.fillStyle = `rgb(0,0,255)`;
-            }else {
-                ctx.fillStyle = `rgb(255,0,0)`;
-            }
+            ctx.fillStyle = `rgb(0,0,255)`;
         }
         
         // debugger
         ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
     }
     drawPath(ctx) {
-        ctx.fillStyle = `rgb(0,255,0)`;
-        // debugger
-        ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
+        if(this.visited) {
+
+            ctx.fillStyle = `rgb(0,255,0)`;
+            ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
+        }
     }
 
 }

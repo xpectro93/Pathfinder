@@ -11,9 +11,9 @@ class AStar {
         this.lastNode = start;
     };
     //Manhattan distance 
-    getHeuristic(current, neighbor) {
-        let newX = Math.abs(current.x - neighbor.x);
-        let newY = Math.abs(current.y - neighbor.y);
+    getHeuristic(start, end) {
+        let newX = Math.abs(start.x - end.x);
+        let newY = Math.abs(start.y - end.y);
 
         return newX + newY;
     }
@@ -23,9 +23,12 @@ class AStar {
         //while theres items in the Queue we keep looking
         while(this.openSet.length) {
             //initialize at 0 because is the first item in the queue;
-            console.log('loop')
             let lowestFIndex = 0;
             for(let i = 0; i < this.openSet.length;i++) {
+
+                if(this.openSet[lowestFIndex].f > this.openSet[i].f) {
+                    lowestFIndex = i
+                }
 
                 //check if a Node in openSet has Lower f than current lowest f
                 if(this.openSet[lowestFIndex].f <= this.openSet[i].f) {
@@ -33,6 +36,7 @@ class AStar {
                         lowestFIndex = i;
                     }
                 }
+                
 
             }
 
@@ -53,13 +57,14 @@ class AStar {
 
             //remove from openSet once we have done find
             this.openSet = this.openSet.filter(node => node !== current);
-            current.visited = true;
+            // current.visited = true;
             this.closedSet.add(current);
             let currentNeighbors = current.getNeighbors(this.grid);
 
             for(let neighbor of currentNeighbors) {
 
                 //if neighbor is part of closed set, then skip 
+
                 if(this.closedSet.has(neighbor)) continue;
 
                 //possible new g value for the neighbor of current Node;
@@ -72,7 +77,7 @@ class AStar {
                     //update g, h, f values
                     neighbor.g = tempG;
                     neighbor.h = this.getHeuristic(neighbor, this.target);
-                    neighbor.f = neighbor.g + neighbor.f;
+                    neighbor.f = neighbor.g + neighbor.h;
 
                     //create a link to later use as Linked list to create path
                     neighbor.previous = current;

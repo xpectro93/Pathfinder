@@ -40,15 +40,16 @@ const dungeon = [
     [1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1],
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ]
+let SCALE = 50
 
-let w = (WIDTH / 50);
-let h = (HEIGHT / 50);
+let w = (WIDTH / SCALE);
+let h = (HEIGHT / SCALE);
 
 let drawingGrid = [];
 
-for (let y = 0; y < 50; y++) {
+for (let y = 0; y < SCALE; y++) {
     let drawingRow = [];
-    for (let x = 0; x < 50; x++) {
+    for (let x = 0; x < SCALE; x++) {
         ctx.strokeStyle = 'black';
         //x,y,w,h
         ctx.strokeRect(x * w, y * h, w, h);
@@ -76,44 +77,30 @@ canvas.addEventListener('mouseup', e => {
 canvas.addEventListener('dblclick', e => {
     e.preventDefault();
     let start = drawingGrid[1][1];
-    let end = drawingGrid[45][45];
+    let end = drawingGrid[20][20];
     let newSearch = new AStar(start, end,drawingGrid);
      newSearch.findPath();
     let path = newSearch.constructPath();
 
-    console.log(path)
-
+    drawingGrid.forEach(row => row.forEach(box => box.drawPath(ctx)))
     path.forEach(node => {
         node.draw(ctx)
     })
 })
 
 function collision (mouse, box) {
-    debugger
-    let LRCheck = (mouse.x > box.x && mouse.x < (box.x + box.width));
+    // debugger
+    let LRCheck = (mouse.x > (box.x * box.width) && mouse.x < ((box.x * box.width) + box.width));
     // let UDCheck = (mouse.y > box.y && mouse.y < (box.y + box.height));
     //&& UDCheck
     return LRCheck ;
 }
 
 function changeToWall(e) {
-
     if(isDrawing) {
         let tx = Math.floor(e.offsetX / h);
         let ty = Math.floor(e.offsetY / h);
-        let mouse = { x: e.offsetX, y:e.offsetY};
-
-        // for(let y = 0; y < drawingGrid.length; y++) {
-        //     for(let x = 0; x < drawingGrid[0].length; x++) {
-        //         let box = drawingGrid[y][x]
-
-        //         if(collision(mouse,box)) {
-        //             drawingGrid[y][x].isWall = true;
-        //             drawingGrid[y][x].draw(ctx)
-        //         }
-        //     }
-        // }
-        console.log(drawingGrid[ty][tx],tx,ty)
+ 
         drawingGrid[ty][tx].isWall = true;
         
         drawingGrid[ty][tx].draw(ctx)
