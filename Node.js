@@ -45,9 +45,9 @@ class Node {
 
     draw(ctx) {
         if(!this.isWall) {
-            ctx.fillStyle = `rgb(255,0,0)`;
+            ctx.fillStyle = `rgb(0,0,154)`;
         }else{
-            ctx.fillStyle = `rgb(0,0,255)`;
+            ctx.fillStyle = `rgb(24,24,24)`;
         }
         
         // debugger

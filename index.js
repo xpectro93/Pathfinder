@@ -7,7 +7,7 @@ let ctx = canvas.getContext('2d');
 let WIDTH = canvas.width = window.innerWidth;
 let HEIGHT = canvas.height = window.innerHeight;
 
-let SCALE = 10
+let SCALE = 100
 
 let w = (WIDTH / SCALE);
 let h = (HEIGHT / SCALE);
@@ -44,7 +44,7 @@ canvas.addEventListener('mouseup', e => {
 canvas.addEventListener('dblclick', e => {
     e.preventDefault();
     let start = drawingGrid[1][1];
-    let end = drawingGrid[7][7];
+    let end = drawingGrid[75][75];
     let newSearch = new AStar(start, end,drawingGrid);
      newSearch.findPath();
     let path = newSearch.constructPath();
@@ -52,7 +52,7 @@ canvas.addEventListener('dblclick', e => {
 
     //paths already explored
     newSearch.closedSet.forEach(row =>{
-        row.drawPath(ctx,`green`);
+        row.drawPath(ctx,`cyan`);
 
     });
     //paths to be explored
