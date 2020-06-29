@@ -28,7 +28,7 @@ class AStar {
             console.log('loop');
             for(let i = 0; i < this.openSet.length;i++) {
 
-                //TODO:Change this to priority queue/minhheap for O(1)
+                //TODO:Change this to priority queue/minhheap for O(1) lookup
                 //check if a Node in openSet has Lower f than current lowest f
                 if(this.openSet[lowestFIndex].f > this.openSet[i].f) {
                     lowestFIndex = i
@@ -105,8 +105,8 @@ class AStar {
         let tempPath = [];
         let currentNode = this.lastNode
 
+        //traverse through "linkedList"
         while(currentNode) {
-            // tempPath.unshift([currentNode.x,currentNode.y]);
             tempPath.push(currentNode)
             currentNode = currentNode.previous;
         }
