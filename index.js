@@ -17,10 +17,14 @@ let h;
 
 let drawingGrid = [];
 gridSize.addEventListener('change', e => {
-    //clear drawing grid
+
+    //clear node grid;
+    //TODO: Add rest of the clearing values
    drawingGrid = []
+
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
+    //convert range input to number
     SCALE = Number(e.target.value);
     w = (WIDTH / SCALE);
     h = (HEIGHT / SCALE);
@@ -28,13 +32,9 @@ gridSize.addEventListener('change', e => {
     for (let y = 0; y < SCALE; y++) {
         let drawingRow = [];
         for (let x = 0; x < SCALE; x++) {
-            // ctx.strokeStyle = 'black';
             //x,y,w,h
-            
-            console.log(w,h)
             ctx.strokeRect(x * w, y * h, w, h);
             let node = new Node(x,y,false,w,h);
-            // let node = new Color(x,y,false,w,h);
 
             drawingRow.push(node);
 
@@ -42,7 +42,6 @@ gridSize.addEventListener('change', e => {
         drawingGrid.push(drawingRow);
     }
 
-    // console.log(drawingGrid[0][0].width, drawingGrid[0][0].height,SCALE,w,h)
 })
 
 
@@ -62,6 +61,7 @@ canvas.addEventListener('dblclick', e => findOurWayHome)
 // canvas.addEventListener('touchmove', changeToWallMobile);
 // canvas.addEventListener('touchstart', e => isDrawing = true);
 // canvas.addEventListener('touchend', e => isDrawing = false);
+
 // TODO: Add event listener for mobile'
 // canvas.addEventListener('')
 
@@ -70,10 +70,8 @@ function changeToWall(e) {
     if(isDrawing) {
         let tx = Math.floor(e.offsetX / h);
         let ty = Math.floor(e.offsetY / h);
-
-        
+        //TODO: Add boundary check
         drawingGrid[ty][tx].isWall = true;
-        
         drawingGrid[ty][tx].draw(ctx)
 
     }

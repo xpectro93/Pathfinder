@@ -11,12 +11,20 @@
     <h1>Pathfinder</h1>
     <form>
         <label for="pathFindingType">
+            Pathfinding Type:
             <select>
                 <option value="A_Star">A* Algorithm</option>
             </select>
         </label>
         <label for="gridRange">
+            Grid Size
             <input id="gridRange" type="range" min="20" step="5" max="50"/>
+        </label>
+        <label for="position">
+            Start 
+            <input type="radio" name="position" value="start" id="position">
+            End 
+            <input type="radio" name="position" value="end" id="end">
         </label>
         
     </form>
