@@ -7,7 +7,7 @@ let ctx = canvas.getContext('2d');
 let WIDTH = canvas.width = window.innerWidth;
 let HEIGHT = canvas.height = window.innerHeight;
 
-let SCALE = 100
+let SCALE = 50
 
 let w = (WIDTH / SCALE);
 let h = (HEIGHT / SCALE);
@@ -41,6 +41,13 @@ canvas.addEventListener('mousedown', e => isDrawing = true);
 canvas.addEventListener('mouseup', e => {
     isDrawing = false
 });
+
+//MOBILE EXPERIENCE
+canvas.addEventListener('touchmove', changeToWallMobile);
+canvas.addEventListener('touchstart', e => isDrawing = true);
+canvas.addEventListener('touchend', e => isDrawing = false);
+
+
 canvas.addEventListener('dblclick', e => {
     e.preventDefault();
     let start = drawingGrid[1][1];
@@ -66,11 +73,25 @@ function changeToWall(e) {
     if(isDrawing) {
         let tx = Math.floor(e.offsetX / h);
         let ty = Math.floor(e.offsetY / h);
+        console.log(ty,tx)
  
         drawingGrid[ty][tx].isWall = true;
         
         drawingGrid[ty][tx].draw(ctx)
 
     }
+}
+
+function changeToWallMobile (e) {
+
+    if(isDrawing) {
+        let rect = e.target.getBoundingClientRect();
+        let x = Math.floor((e.targetTouches[0].pageX - rect.left)/10);
+        let y = Math.floor((e.targetTouches[0].pageY - rect.top)/10);
+        console.log(x/10,y/10)
+        drawingGrid[y][x].isWall = true;      
+        drawingGrid[y][x].draw(ctx)
+    }
+
 }
 

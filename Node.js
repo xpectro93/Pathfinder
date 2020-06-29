@@ -59,10 +59,8 @@ class Node {
         ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
     }
     drawPath(ctx,color) {
-  
-
-            ctx.fillStyle = color;
-            ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
         
     }
 
