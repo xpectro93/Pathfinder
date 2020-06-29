@@ -1,9 +1,11 @@
 class Node {
+    // WIDTH and HEIGHT are their pixel dimensions based on grid size;
     constructor(x,y, isWall,WIDTH,HEIGHT) {
         this.x = x;
         this.y = y;
         
         //distance from end node;
+        //decided by heuristic function on A* file
         this.h = 0;
         //distance from starting node;
         this.g = 0;
@@ -23,13 +25,16 @@ class Node {
 
     //grid is the matrix of Nodes
     getNeighbors (grid) {
+        //This could be a property of the class?
         let moves = [[-1,0],[0,1],[1,0],[0,-1]];
 
         for (let move of moves) {
-            const [r,c] = move;
-            let nr = r + this.y;
-            let nc = c + this.x;
 
+            const [row,col] = move;
+            let nr = row + this.y;
+            let nc = col + this.x;
+
+            //check if this is a valid neighbor
             if(grid[nr] && grid[nr][nc]!== undefined) {
 
                 //if it is not a wall, then we add this to our valid neighbors array;

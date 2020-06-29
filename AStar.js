@@ -5,9 +5,10 @@ class AStar {
         this.grid = grid;
 
         this.openSet = [start];
+        //O(1);
         this.closedSet = new Set();
 
-        //used to reverse path;
+        //used to create path;
         this.lastNode = start;
     };
     //Manhattan distance 
@@ -24,14 +25,17 @@ class AStar {
         while(this.openSet.length) {
             //initialize at 0 because is the first item in the queue;
             let lowestFIndex = 0;
-            console.log('loop')
+            console.log('loop');
             for(let i = 0; i < this.openSet.length;i++) {
 
+                //TODO:Change this to priority queue/minhheap for O(1)
+                //check if a Node in openSet has Lower f than current lowest f
                 if(this.openSet[lowestFIndex].f > this.openSet[i].f) {
                     lowestFIndex = i
                 }
 
-                //check if a Node in openSet has Lower f than current lowest f
+                //If F values are tied check manhattan distance;-
+                //if distance of end node is shorter. It becomes new lowest F 
                 if(this.openSet[lowestFIndex].f === this.openSet[i].f) {
                     if(this.openSet[lowestFIndex].h >= this.openSet[i].h) {
                         console.log('deciding')
@@ -43,17 +47,17 @@ class AStar {
             }
 
 
-            // change current node to be the last checked
+            //change lastNode to be the current node.
             let current =  this.openSet[lowestFIndex];
             this.lastNode = current;
 
 
-            //check if we have found our targer;
-
+            
+            //check if we have found our target;
             if(this.target === current) {
 
                 console.log('Target has been found');
-                // this.constructPath();
+                //Break out of function once target is found;
                 return;
             }
 
@@ -66,7 +70,6 @@ class AStar {
             for(let neighbor of currentNeighbors) {
 
                 //if neighbor is part of closed set, then skip 
-
                 if(this.closedSet.has(neighbor)) continue;
 
                 //possible new g value for the neighbor of current Node;
