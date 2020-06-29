@@ -7,6 +7,21 @@ let ctx = canvas.getContext('2d');
 
 //Grab form elements from body;
 let gridSize = document.getElementById('gridRange');
+let position = document.getElementById('position');
+let submitBtn = document.getElementById('submit');
+let form = document.getElementById('gridForm');
+console.log(position)
+position.addEventListener('change', e =>{
+    if(e.currentTarget.value === "start") {
+        isStart = true;
+        isEnd = false;
+    }else if (e.currentTarget.value === "end") {
+        isStart = false;
+        isEnd = true;
+    } else {
+        isStart = isEnd = false;
+    }
+})
 
 let WIDTH = canvas.width = window.innerWidth;
 let HEIGHT = canvas.height = window.innerHeight;
@@ -15,11 +30,18 @@ let SCALE;
 let w;
 let h;
 
+//Position
+let isStart = false;
+let isEnd = false;
+let start;
+let end;
+
 let drawingGrid = [];
 gridSize.addEventListener('change', e => {
 
     //clear node grid;
     //TODO: Add rest of the clearing values
+    //Could be a function;
    drawingGrid = []
 
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -53,10 +75,30 @@ gridSize.addEventListener('change', e => {
 
 let isDrawing = false;
 canvas.addEventListener('mousemove', changeToWall);
-canvas.addEventListener('mousedown', e => isDrawing = true);
-canvas.addEventListener('mouseup', e => isDrawing = false);
-canvas.addEventListener('dblclick', e => findOurWayHome)
+canvas.addEventListener('mousedown', _ => isDrawing = true);
+canvas.addEventListener('mouseup', _ => isDrawing = false);
 
+canvas.addEventListener('click', e => {
+    if(isStart) {
+        console.log('start')
+        let tx = Math.floor(e.offsetX / h);
+        let ty = Math.floor(e.offsetY / h);
+        start = drawingGrid[ty][tx]
+        drawingGrid[ty][tx].draw(ctx);
+
+     } else if(isEnd) {
+         console.log('end')
+        let tx = Math.floor(e.offsetX / h);
+        let ty = Math.floor(e.offsetY / h);
+        end = drawingGrid[ty][tx]
+        drawingGrid[ty][tx].draw(ctx);
+     } else return
+})
+// canvas.addEventListener('dblclick', e => findOurWayHome)
+form.addEventListener('submit', e=> {
+    e.preventDefault();
+    findOurWayHome()
+})
 //MOBILE EXPERIENCE
 // canvas.addEventListener('touchmove', changeToWallMobile);
 // canvas.addEventListener('touchstart', e => isDrawing = true);
@@ -68,8 +110,11 @@ canvas.addEventListener('dblclick', e => findOurWayHome)
 
 function changeToWall(e) {
     if(isDrawing) {
+
+        //TODO: turn this part into function;
         let tx = Math.floor(e.offsetX / h);
         let ty = Math.floor(e.offsetY / h);
+
         //TODO: Add boundary check
         drawingGrid[ty][tx].isWall = true;
         drawingGrid[ty][tx].draw(ctx)
@@ -90,10 +135,10 @@ function changeToWall(e) {
 
 // }
 
-function findOurWayHome () {
-    e.preventDefault();
-    let start = drawingGrid[1][1];
-    let end = drawingGrid[75][75];
+function findOurWayHome (e) {
+    debugger
+    // let start = drawingGrid[1][1];
+    // let end = drawingGrid[75][75];
     let newSearch = new AStar(start, end,drawingGrid);
      newSearch.findPath();
     let path = newSearch.constructPath();

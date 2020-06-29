@@ -21,7 +21,7 @@ class AStar {
 
     findPath () {
 
-        //while theres items in the Queue we keep looking
+        //while theres items in the queue we keep looking
         while(this.openSet.length) {
             //initialize at 0 because is the first item in the queue;
             let lowestFIndex = 0;

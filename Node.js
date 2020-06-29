@@ -13,8 +13,6 @@ class Node {
         // f = g + h
         this.f = 0;
 
-
-
         this.width = WIDTH;
         this.height = HEIGHT;
         this.isWall = isWall;

@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Pathfinder</h1>
-    <form>
+    <form id="gridForm">
         <label for="pathFindingType">
             Pathfinding Type:
             <select>
@@ -20,13 +20,15 @@
             Grid Size
             <input id="gridRange" type="range" min="20" step="5" max="50"/>
         </label>
-        <label for="position">
-            Start 
-            <input type="radio" name="position" value="start" id="position">
-            End 
-            <input type="radio" name="position" value="end" id="end">
-        </label>
-        
+        <div>
+            Pick Starting point and Ending point
+            <select name="position" id="position">
+                <option> Pick Location </option>
+                <option value="start">Start</option>
+                <option value="end">End</option>
+            </select>
+        </div>
+    <input id="submit" type="submit" value="Draw Path">
     </form>
     <canvas id='root'></canvas>
 </body>
