@@ -1,5 +1,6 @@
 import Node from '/Node.js';
 import AStar from './AStar.js';
+import { validParameters } from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -79,19 +80,17 @@ canvas.addEventListener('mousedown', _ => isDrawing = true);
 canvas.addEventListener('mouseup', _ => isDrawing = false);
 
 canvas.addEventListener('click', e => {
-    if(isStart) {
-        console.log('start')
-        let tx = Math.floor(e.offsetX / h);
-        let ty = Math.floor(e.offsetY / h);
-        start = drawingGrid[ty][tx]
-        drawingGrid[ty][tx].draw(ctx);
-
-     } else if(isEnd) {
-         console.log('end')
-        let tx = Math.floor(e.offsetX / h);
-        let ty = Math.floor(e.offsetY / h);
-        end = drawingGrid[ty][tx]
-        drawingGrid[ty][tx].draw(ctx);
+    let tx = Math.floor(e.offsetX / h);
+    let ty = Math.floor(e.offsetY / h);
+    if(isStart && validParameters(drawingGrid,ty,tx)) {
+       
+            start = drawingGrid[ty][tx]
+            drawingGrid[ty][tx].drawPath(ctx,"violet");
+        
+     } else if(isEnd && validParameters(drawingGrid,ty,tx)) {
+            end = drawingGrid[ty][tx]
+            drawingGrid[ty][tx].drawPath(ctx,"green");
+  
      } else return
 })
 // canvas.addEventListener('dblclick', e => findOurWayHome)
@@ -136,9 +135,7 @@ function changeToWall(e) {
 // }
 
 function findOurWayHome (e) {
-    debugger
-    // let start = drawingGrid[1][1];
-    // let end = drawingGrid[75][75];
+    //TODO: Add check here
     let newSearch = new AStar(start, end,drawingGrid);
      newSearch.findPath();
     let path = newSearch.constructPath();
