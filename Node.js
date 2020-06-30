@@ -49,8 +49,6 @@ class Node {
         }else{
             ctx.fillStyle = `rgb(24,24,24)`;
         }
-        // console.log(this.x * this.width, this.y * this.height, this.width,this.height)
-        // debugger
         ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
     }
     drawPath(ctx,color) {

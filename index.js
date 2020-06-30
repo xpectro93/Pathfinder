@@ -1,6 +1,6 @@
 import Node from '/Node.js';
 import AStar from './AStar.js';
-import { isValidLocation } from './helper.js'
+import { isValidLocation , drawInstructions } from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -9,9 +9,9 @@ let ctx = canvas.getContext('2d');
 //Grab form elements from body;
 let gridSize = document.getElementById('gridRange');
 let position = document.getElementById('position');
-let submitBtn = document.getElementById('submit');
 let form = document.getElementById('gridForm');
-console.log(position)
+
+
 position.addEventListener('change', e =>{
     if(e.currentTarget.value === "start") {
         isStart = true;
@@ -27,9 +27,13 @@ position.addEventListener('change', e =>{
 let WIDTH = canvas.width = window.innerWidth;
 let HEIGHT = canvas.height = window.innerHeight;
 
+
 let SCALE;
 let w;
 let h;
+
+
+drawInstructions(ctx,WIDTH,HEIGHT)
 
 //Position
 let isStart = false;
@@ -43,12 +47,13 @@ gridSize.addEventListener('change', e => {
     //clear node grid;
     //TODO: Add rest of the clearing values
     //Could be a function;
-   drawingGrid = []
+   drawingGrid = [];
 
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
     //convert range input to number
     SCALE = Number(e.target.value);
+
     w = (WIDTH / SCALE);
     h = (HEIGHT / SCALE);
 
@@ -99,21 +104,18 @@ form.addEventListener('submit', e=> {
     findOurWayHome()
 })
 //MOBILE EXPERIENCE
-// canvas.addEventListener('touchmove', changeToWallMobile);
-// canvas.addEventListener('touchstart', e => isDrawing = true);
-// canvas.addEventListener('touchend', e => isDrawing = false);
+canvas.addEventListener('touchstart', e => isDrawing = true);
+canvas.addEventListener('touchmove', changeToWallMobile);
+canvas.addEventListener('touchend', e => isDrawing = false);
 
 // TODO: Add event listener for mobile'
-// canvas.addEventListener('')
+
 
 
 function changeToWall(e) {
-    if(isDrawing) {
-
-        //TODO: turn this part into function;
-        let tx = Math.floor(e.offsetX / h);
-        let ty = Math.floor(e.offsetY / h);
-
+    let tx = Math.floor(e.offsetX / h);
+    let ty = Math.floor(e.offsetY / h);
+    if(isDrawing && isValidLocation(drawingGrid,ty,tx)) {
         //TODO: Add boundary check
         drawingGrid[ty][tx].isWall = true;
         drawingGrid[ty][tx].draw(ctx)
@@ -121,41 +123,26 @@ function changeToWall(e) {
     }
 }
 
-// function changeToWallMobile (e) {
+function changeToWallMobile (e) {
 
-//     if(isDrawing) {
-//         let rect = e.target.getBoundingClientRect();
-//         let x = Math.floor((e.targetTouches[0].pageX - rect.left)/10);
-//         let y = Math.floor((e.targetTouches[0].pageY - rect.top)/10);
-//         console.log(x/10,y/10)
-//         drawingGrid[y][x].isWall = true;      
-//         drawingGrid[y][x].draw(ctx)
-//     }
+    let rect = e.target.getBoundingClientRect();
+    let x = Math.floor((e.targetTouches[0].pageX - rect.left)/10);
+    let y = Math.floor((e.targetTouches[0].pageY - rect.top)/10);
 
-// }
+    if(isDrawing && isValidLocation(drawingGrid,y,x)) {
+        
+        drawingGrid[y][x].isWall = true;      
+        drawingGrid[y][x].draw(ctx)
+    } else return 
+
+}
 
 function findOurWayHome (e) {
     //TODO: Add check here
     let newSearch = new AStar(start, end,drawingGrid);
-    //  newSearch.findPath();
-    // let path = newSearch.constructPath();
 
-
-    // //paths already explored
-    // newSearch.closedSet.forEach(row =>{
-    //     row.drawPath(ctx,`cyan`);
-
-    // });
-    // //paths to be explored
-    // newSearch.openSet.forEach(node => node.drawPath(ctx, 'pink'));
-
-    // //Solution
-    // path.forEach(node => {
-    //     node.draw(ctx)
-    // })
 
     newSearch.timedFindPath(ctx);
-    
-
 
 }
+
