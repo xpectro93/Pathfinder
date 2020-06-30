@@ -1,3 +1,4 @@
+import { isValidLocation } from "./helper.js"
 class Node {
     // WIDTH and HEIGHT are their pixel dimensions based on grid size;
     constructor(x,y, isWall,WIDTH,HEIGHT) {
@@ -32,15 +33,11 @@ class Node {
             let nr = row + this.y;
             let nc = col + this.x;
 
-            //check if this is a valid neighbor
-            if(grid[nr] && grid[nr][nc]!== undefined) {
-
                 //if it is not a wall, then we add this to our valid neighbors array;
-                if(!grid[nr][nc].isWall) {
+                if(isValidLocation(grid,nr,nc) && !grid[nr][nc].isWall) {
 
                     this.neighbors.push(grid[nr][nc]);
                 }
-            }
         }
         
         return this.neighbors

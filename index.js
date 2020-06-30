@@ -1,6 +1,6 @@
 import Node from '/Node.js';
 import AStar from './AStar.js';
-import { validParameters } from './helper.js'
+import { isValidLocation } from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -82,12 +82,12 @@ canvas.addEventListener('mouseup', _ => isDrawing = false);
 canvas.addEventListener('click', e => {
     let tx = Math.floor(e.offsetX / h);
     let ty = Math.floor(e.offsetY / h);
-    if(isStart && validParameters(drawingGrid,ty,tx)) {
+    if(isStart && isValidLocation(drawingGrid,ty,tx)) {
        
             start = drawingGrid[ty][tx]
             drawingGrid[ty][tx].drawPath(ctx,"violet");
         
-     } else if(isEnd && validParameters(drawingGrid,ty,tx)) {
+     } else if(isEnd && isValidLocation(drawingGrid,ty,tx)) {
             end = drawingGrid[ty][tx]
             drawingGrid[ty][tx].drawPath(ctx,"green");
   
@@ -137,18 +137,24 @@ function changeToWall(e) {
 function findOurWayHome (e) {
     //TODO: Add check here
     let newSearch = new AStar(start, end,drawingGrid);
-     newSearch.findPath();
-    let path = newSearch.constructPath();
+    //  newSearch.findPath();
+    // let path = newSearch.constructPath();
 
 
-    //paths already explored
-    newSearch.closedSet.forEach(row =>{
-        row.drawPath(ctx,`cyan`);
+    // //paths already explored
+    // newSearch.closedSet.forEach(row =>{
+    //     row.drawPath(ctx,`cyan`);
 
-    });
-    //paths to be explored
-    newSearch.openSet.forEach(node => node.drawPath(ctx, 'pink'))
-    path.forEach(node => {
-        node.draw(ctx)
-    })
+    // });
+    // //paths to be explored
+    // newSearch.openSet.forEach(node => node.drawPath(ctx, 'pink'));
+
+    // //Solution
+    // path.forEach(node => {
+    //     node.draw(ctx)
+    // })
+
+    newSearch.asyncFindPath(ctx);
+
+
 }
