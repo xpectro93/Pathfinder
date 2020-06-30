@@ -19,3 +19,17 @@ export function drawInstructions (ctx,w,h) {
     }
     
 };
+
+export function changePixelType (ctx, type, pixel) {
+    if(type === "wall") {
+        pixel.isWall = true;
+        pixel.draw(ctx);
+    } 
+    else if( type === "start" ) {
+        pixel.drawPath(ctx,"violet");    
+    }
+    else if(type === "end") {
+        pixel.drawPath(ctx,"green");
+    }
+    return pixel
+}

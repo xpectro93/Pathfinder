@@ -1,6 +1,6 @@
 import Node from '/Node.js';
 import AStar from './AStar.js';
-import { isValidLocation , drawInstructions } from './helper.js'
+import { isValidLocation , drawInstructions, changePixelType } from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -8,21 +8,9 @@ let ctx = canvas.getContext('2d');
 
 //Grab form elements from body;
 let gridSize = document.getElementById('gridRange');
-let position = document.getElementById('position');
+let type = document.getElementById('type');
 let form = document.getElementById('gridForm');
 
-
-position.addEventListener('change', e =>{
-    if(e.currentTarget.value === "start") {
-        isStart = true;
-        isEnd = false;
-    }else if (e.currentTarget.value === "end") {
-        isStart = false;
-        isEnd = true;
-    } else {
-        isStart = isEnd = false;
-    }
-})
 
 let WIDTH = canvas.width = window.innerWidth;
 let HEIGHT = canvas.height = window.innerHeight;
@@ -36,10 +24,7 @@ let h;
 drawInstructions(ctx,WIDTH,HEIGHT)
 
 //Position
-let isStart = false;
-let isEnd = false;
-let start;
-let end;
+let position = {}
 
 let drawingGrid = [];
 gridSize.addEventListener('change', e => {
@@ -84,20 +69,20 @@ canvas.addEventListener('mousemove', changeToWall);
 canvas.addEventListener('mousedown', _ => isDrawing = true);
 canvas.addEventListener('mouseup', _ => isDrawing = false);
 
-canvas.addEventListener('click', e => {
-    let tx = Math.floor(e.offsetX / h);
-    let ty = Math.floor(e.offsetY / h);
-    if(isStart && isValidLocation(drawingGrid,ty,tx)) {
+// canvas.addEventListener('click', e => {
+//     let tx = Math.floor(e.offsetX / h);
+//     let ty = Math.floor(e.offsetY / h);
+//     if(isStart && isValidLocation(drawingGrid,ty,tx)) {
        
-            start = drawingGrid[ty][tx]
-            drawingGrid[ty][tx].drawPath(ctx,"violet");
+//             start = drawingGrid[ty][tx]
+//             drawingGrid[ty][tx].drawPath(ctx,"violet");
         
-     } else if(isEnd && isValidLocation(drawingGrid,ty,tx)) {
-            end = drawingGrid[ty][tx]
-            drawingGrid[ty][tx].drawPath(ctx,"green");
+//      } else if(isEnd && isValidLocation(drawingGrid,ty,tx)) {
+//             end = drawingGrid[ty][tx]
+//             drawingGrid[ty][tx].drawPath(ctx,"green");
   
-     } else return
-})
+//      } else return
+// })
 // canvas.addEventListener('dblclick', e => findOurWayHome)
 form.addEventListener('submit', e=> {
     e.preventDefault();
@@ -117,9 +102,9 @@ function changeToWall(e) {
     let ty = Math.floor(e.offsetY / h);
     if(isDrawing && isValidLocation(drawingGrid,ty,tx)) {
         //TODO: Add boundary check
-        drawingGrid[ty][tx].isWall = true;
-        drawingGrid[ty][tx].draw(ctx)
-
+        let pixel  = drawingGrid[ty][tx];
+    
+        position[type.value]  = changePixelType(ctx,type.value,pixel);
     }
 }
 
@@ -130,16 +115,17 @@ function changeToWallMobile (e) {
     let y = Math.floor((e.targetTouches[0].pageY - rect.top)/10);
 
     if(isDrawing && isValidLocation(drawingGrid,y,x)) {
-        
-        drawingGrid[y][x].isWall = true;      
-        drawingGrid[y][x].draw(ctx)
-    } else return 
+        //TODO: Add boundary check
+        let pixel  = drawingGrid[y][x];
+    
+        position[type.value]  = changePixelType(ctx,type.value,pixel);
+    }
 
 }
 
 function findOurWayHome (e) {
-    //TODO: Add check here
-    let newSearch = new AStar(start, end,drawingGrid);
+    
+    let newSearch = new AStar(position.start, position.end,drawingGrid);
 
 
     newSearch.timedFindPath(ctx);
