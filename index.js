@@ -154,7 +154,8 @@ function findOurWayHome (e) {
     //     node.draw(ctx)
     // })
 
-    newSearch.asyncFindPath(ctx);
+    newSearch.timedFindPath(ctx);
+    
 
 
 }

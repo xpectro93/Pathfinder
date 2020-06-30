@@ -99,13 +99,14 @@ class AStar {
         
         console.log('no path',this.lastNode);
     }
-    asyncFindPath (ctx) {
+    timedFindPath (ctx) {
         
 
         let search = setInterval(()=> {
 
             if(!this.openSet.length) {
                 console.log('no path found')
+
                 clearInterval(search);
             }
 
@@ -145,7 +146,8 @@ class AStar {
 
                 console.log('Target has been found');
                 //Break out of function once target is found;
-                clearInterval(search)
+                clearInterval(search);
+                this.visualFindPath(ctx)
                 return;
             }
 
@@ -188,7 +190,7 @@ class AStar {
 
 
 
-        },50)
+        },5)
     }
 
 
@@ -202,6 +204,21 @@ class AStar {
             currentNode = currentNode.previous;
         }
         return tempPath.reverse();
+    }
+    visualFindPath (ctx) {
+        let path = this.constructPath();
+        let i = 0;
+        let shortestPath = setInterval(() => {
+            if(i === path.length -1) {
+                
+                clearInterval(shortestPath)
+            }
+            
+            path[i].drawPath(ctx,"red");
+            i++
+            
+        }, 5);
+        console.log(i,path.length)
     }
 }
 export default AStar;
