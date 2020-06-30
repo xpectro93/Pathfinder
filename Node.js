@@ -42,16 +42,7 @@ class Node {
         
         return this.neighbors
     }
-
-    draw(ctx) {
-        if(!this.isWall) {
-            ctx.fillStyle = `rgb(0,0,154)`;
-        }else{
-            ctx.fillStyle = `rgb(24,24,24)`;
-        }
-        ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
-    }
-    drawPath(ctx,color) {
+    draw(ctx,color) {
         ctx.fillStyle = color;
         ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
         

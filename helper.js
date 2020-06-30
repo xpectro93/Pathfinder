@@ -11,6 +11,7 @@ export function drawInstructions (ctx,w,h) {
                      "5. Click 'Draw Path'",
                      "6. Enjoy :)"];
     let fontSize = 35;
+    ctx.fillStyle = "black";
     ctx.font = `${fontSize}px Helvetica Neue`;
     ctx.textAlign = "center";
     let rowSpace = h / instructions.length + 1;
@@ -23,13 +24,13 @@ export function drawInstructions (ctx,w,h) {
 export function changePixelType (ctx, type, pixel) {
     if(type === "wall") {
         pixel.isWall = true;
-        pixel.draw(ctx);
+        pixel.draw(ctx,"black");
     } 
     else if( type === "start" ) {
-        pixel.drawPath(ctx,"violet");    
+        pixel.draw(ctx,"blue");    
     }
     else if(type === "end") {
-        pixel.drawPath(ctx,"green");
+        pixel.draw(ctx,"red");
     }
     return pixel
 }

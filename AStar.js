@@ -19,11 +19,11 @@ class AStar {
         return newX + newY;
     }
 
-    findPath () {
+    purePathFinder () {
 
         //while theres items in the queue we keep looking
         while(this.openSet.length) {
-            
+
             //initialize at 0 because is the first item in the queue;
             let lowestFIndex = 0;
             console.log('loop');
@@ -106,7 +106,15 @@ class AStar {
     let search = setInterval(()=> {
 
         if(!this.openSet.length) {
-            console.log('no path found')
+            console.log('no path found');
+            ctx.fillStyle = "black";
+            ctx.strokeStyle = "pink"
+            ctx.font = `50px Helvetica Neue`;
+            ctx.textAlign = "center";
+            let dim = this.grid[0][0].width * this.grid.length
+            console.log(dim)
+            ctx.fillText("No Path Available", (dim / 4),dim/4);
+             
 
             clearInterval(search);
             return;
@@ -141,7 +149,10 @@ class AStar {
         let current =  this.openSet[lowestFIndex];
         this.lastNode = current;
 
+        this.closedSet.forEach(node =>node.draw(ctx, 'rgba(8,69,113,0.01)'))
 
+        let currentPath = this.constructPath();
+        currentPath.forEach(node => node.draw(ctx,"rgb(216,255,255)"))
         
         //check if we have found our target;
         if(this.target === current) {
@@ -155,9 +166,8 @@ class AStar {
 
         //remove from openSet once we have done find
         this.openSet = this.openSet.filter(node => node !== current);
-        // current.visited = true;
 
-        current.drawPath(ctx,"cyan");
+        // current.draw(ctx,"cyan");
         this.closedSet.add(current);
         let currentNeighbors = current.getNeighbors(this.grid);
 
@@ -183,7 +193,7 @@ class AStar {
 
                 //add to queue to items to be explored
                 if(!this.openSet.includes(neighbor)) {
-                    neighbor.drawPath(ctx,"pink")
+                    neighbor.draw(ctx,"rgb(8,69,113)")
                     this.openSet.push(neighbor)
                 };
             }
@@ -213,7 +223,7 @@ class AStar {
                 clearInterval(shortestPath)
             }
             
-            path[i].drawPath(ctx,"red");
+            path[i].draw(ctx,"rgb(219,5,126)");
             i++
             
         }, 5);

@@ -24,7 +24,7 @@ let h;
 drawInstructions(ctx,WIDTH,HEIGHT)
 
 //Position
-let position = {}
+let position = {};
 
 let drawingGrid = [];
 gridSize.addEventListener('change', e => {
@@ -32,6 +32,7 @@ gridSize.addEventListener('change', e => {
     //clear node grid;
     //TODO: Add rest of the clearing values
     //Could be a function;
+   type.value = "wall";
    drawingGrid = [];
 
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -46,6 +47,7 @@ gridSize.addEventListener('change', e => {
         let drawingRow = [];
         for (let x = 0; x < SCALE; x++) {
             //x,y,w,h
+            ctx.strokeStyle = "black"
             ctx.strokeRect(x * w, y * h, w, h);
             let node = new Node(x,y,false,w,h);
 
@@ -57,65 +59,37 @@ gridSize.addEventListener('change', e => {
 
 })
 
-
-
-
-
-
-
-
 let isDrawing = false;
-canvas.addEventListener('mousemove', changeToWall);
+canvas.addEventListener('mousemove', change);
 canvas.addEventListener('mousedown', _ => isDrawing = true);
 canvas.addEventListener('mouseup', _ => isDrawing = false);
 
-// canvas.addEventListener('click', e => {
-//     let tx = Math.floor(e.offsetX / h);
-//     let ty = Math.floor(e.offsetY / h);
-//     if(isStart && isValidLocation(drawingGrid,ty,tx)) {
-       
-//             start = drawingGrid[ty][tx]
-//             drawingGrid[ty][tx].drawPath(ctx,"violet");
-        
-//      } else if(isEnd && isValidLocation(drawingGrid,ty,tx)) {
-//             end = drawingGrid[ty][tx]
-//             drawingGrid[ty][tx].drawPath(ctx,"green");
-  
-//      } else return
-// })
-// canvas.addEventListener('dblclick', e => findOurWayHome)
 form.addEventListener('submit', e=> {
     e.preventDefault();
     findOurWayHome()
 })
 //MOBILE EXPERIENCE
 canvas.addEventListener('touchstart', e => isDrawing = true);
-canvas.addEventListener('touchmove', changeToWallMobile);
+canvas.addEventListener('touchmove', changeMobile);
 canvas.addEventListener('touchend', e => isDrawing = false);
 
-// TODO: Add event listener for mobile'
-
-
-
-function changeToWall(e) {
+function change(e) {
     let tx = Math.floor(e.offsetX / h);
     let ty = Math.floor(e.offsetY / h);
     if(isDrawing && isValidLocation(drawingGrid,ty,tx)) {
-        //TODO: Add boundary check
         let pixel  = drawingGrid[ty][tx];
     
         position[type.value]  = changePixelType(ctx,type.value,pixel);
     }
 }
 
-function changeToWallMobile (e) {
+function changeMobile (e) {
 
     let rect = e.target.getBoundingClientRect();
     let x = Math.floor((e.targetTouches[0].pageX - rect.left)/10);
     let y = Math.floor((e.targetTouches[0].pageY - rect.top)/10);
 
     if(isDrawing && isValidLocation(drawingGrid,y,x)) {
-        //TODO: Add boundary check
         let pixel  = drawingGrid[y][x];
     
         position[type.value]  = changePixelType(ctx,type.value,pixel);
