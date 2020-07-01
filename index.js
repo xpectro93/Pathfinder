@@ -63,6 +63,7 @@ let isDrawing = false;
 canvas.addEventListener('mousemove', change);
 canvas.addEventListener('mousedown', _ => isDrawing = true);
 canvas.addEventListener('mouseup', _ => isDrawing = false);
+// canvas.addEventListener('click', testClick)
 
 form.addEventListener('submit', e=> {
     e.preventDefault();
@@ -74,8 +75,10 @@ canvas.addEventListener('touchmove', changeMobile);
 canvas.addEventListener('touchend', e => isDrawing = false);
 
 function change(e) {
+    
     let tx = Math.floor(e.offsetX / h);
     let ty = Math.floor(e.offsetY / h);
+    console.log(e.offsetX,e.offsetY)
     if(isDrawing && isValidLocation(drawingGrid,ty,tx)) {
         let pixel  = drawingGrid[ty][tx];
     
@@ -106,3 +109,20 @@ function findOurWayHome (e) {
 
 }
 
+
+function testClick (e) {
+    let x = e.offsetX;
+    let y = e.offsetY;
+    drawingGrid.forEach(row => {
+        row.forEach(node=> {
+            if(node.isClicked(x,y)) {
+                
+                node.isWall = true;
+                node.draw(ctx,'yellow');
+                // debugger;
+            }
+        })
+    })
+
+
+}

@@ -21,6 +21,20 @@ class Node {
         this.previous;
     }
 
+    isClicked (mouseX, mouseY) {
+        let pixelX = this.x * this.width;
+        let pixelY = this.y * this.height;
+
+       let leftRight = mouseX > pixelX && mouseX < pixelX + this.width;
+
+       let topBottom = mouseY > pixelY && mouseY < pixelY + this.height;
+       return topBottom && leftRight;
+    }
+    // clicked(mx,my) {
+    //     let px = this.x * this.w;
+    //   let py = this.y * this.w;
+    //     return( mx > px && ( mx < px + this.w)) && ( my > py && ( my < py + this.w))  
+    // }
 
     //grid is the matrix of Nodes
     getNeighbors (grid) {

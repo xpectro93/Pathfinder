@@ -149,7 +149,7 @@ class AStar {
         let current =  this.openSet[lowestFIndex];
         this.lastNode = current;
 
-        this.closedSet.forEach(node =>node.draw(ctx, 'rgba(8,69,113,0.01)'))
+        this.closedSet.forEach(node =>node.draw(ctx, 'rgb(8,69,113)'))
 
         let currentPath = this.constructPath();
         currentPath.forEach(node => node.draw(ctx,"rgb(216,255,255)"))
@@ -200,6 +200,8 @@ class AStar {
         };
 
     },5)
+
+
     }
 
 
