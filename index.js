@@ -1,6 +1,6 @@
 import Node from '/Node.js';
 import AStar from './AStar.js';
-import { isValidLocation , drawInstructions, changePixelType } from './helper.js'
+import { drawInstructions, changePixelType } from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -50,7 +50,7 @@ gridSize.addEventListener('change', e => {
             //x,y,w,h
             ctx.strokeStyle = "black"
             ctx.strokeRect(x * w, y * h, w, h);
-            let node = new Node(x,y,false,w,h);
+            let node = new Node(x,y,w);
 
             drawingRow.push(node);
 
@@ -75,17 +75,6 @@ canvas.addEventListener('touchstart', e => isDrawing = true);
 canvas.addEventListener('touchmove', changeMobile);
 canvas.addEventListener('touchend', e => isDrawing = false);
 
-// function change(e) {
-    
-//     let tx = Math.floor(e.offsetX / h);
-//     let ty = Math.floor(e.offsetY / h);
-//     if(isDrawing && isValidLocation(drawingGrid,ty,tx)) {
-//         let pixel  = drawingGrid[ty][tx];
-    
-//         position[type.value]  = changePixelType(ctx,type.value,pixel);
-//     }
-// }
-
 function change (e) {
     let mouseX = e.offsetX;
     let mouseY = e.offsetY;
@@ -102,19 +91,6 @@ function change (e) {
 
 };
 
-// function changeMobile (e) {
-
-//     let rect = e.target.getBoundingClientRect();
-//     let x = Math.floor((e.targetTouches[0].pageX - rect.left/10));
-//     let y = Math.floor((e.targetTouches[0].pageY - rect.top)/10);
-
-//     if(isDrawing && isValidLocation(drawingGrid,y,x)) {
-//         let pixel  = drawingGrid[y][x];
-    
-//         position[type.value]  = changePixelType(ctx,type.value,pixel);
-//     }
-
-// }
 
 function changeMobile (e) {
     let rect = e.target.getBoundingClientRect();
@@ -125,7 +101,6 @@ function changeMobile (e) {
         row.forEach(node => {
 
             if(isDrawing && node.isClicked(x, y)) {
-                console.log('this is happening')
                position[type.value] = changePixelType(ctx,type.value, node)
             }
         })

@@ -1,7 +1,7 @@
 import { isValidLocation } from "./helper.js"
 class Node {
     // WIDTH and HEIGHT are their pixel dimensions based on grid size;
-    constructor(x,y, isWall,WIDTH,HEIGHT) {
+    constructor(x,y,dimension) {
         this.x = x;
         this.y = y;
         
@@ -14,30 +14,25 @@ class Node {
         // f = g + h
         this.f = 0;
 
-        this.width = WIDTH;
-        this.height = WIDTH;
-        this.isWall = isWall;
+        this.dimension = dimension 
+        this.isWall = false;
         this.previous;
     }
 
     isClicked (mouseX, mouseY) {
-        let pixelX = this.x * this.width;
-        let pixelY = this.y * this.height;
+        let pixelX = this.x * this.dimension;
+        let pixelY = this.y * this.dimension;
 
-       let leftRight =( mouseX > pixelX) && (mouseX < (pixelX + this.width));
+       let leftRight = (mouseX > pixelX) && (mouseX < (pixelX + this.dimension));
 
-       let topBottom = (mouseY > pixelY) && (mouseY < (pixelY + this.width));
+       let topBottom = (mouseY > pixelY) && (mouseY < (pixelY + this.dimension));
        return topBottom && leftRight;
     }
-    // clicked(mx,my) {
-    //     let px = this.x * this.w;
-    //   let py = this.y * this.w;
-    //     return( mx > px && ( mx < px + this.w)) && ( my > py && ( my < py + this.w))  
-    // }
+
 
     //grid is the matrix of Nodes
     getNeighbors (grid) {
-        //This could be a property of the class?
+        // Could be a property of the class?
         let moves = [[-1,0],[0,1],[1,0],[0,-1]];
         let neighbors = [];
         for (let move of moves) {
@@ -56,8 +51,12 @@ class Node {
         return neighbors
     }
     draw(ctx,color) {
+        const { dimension, x, y } = this;
+
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 3
         ctx.fillStyle = color;
-        ctx.fillRect(this.x * this.width, this.y * this.height, this.width,this.height);
+        ctx.fillRect(x * dimension, y * dimension, dimension, dimension);
         
     }
 
