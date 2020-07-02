@@ -12,7 +12,7 @@ export function drawInstructions (ctx,w,h) {
                      "6. Enjoy :)"];
     let fontSize = 35;
     ctx.fillStyle = "black";
-    ctx.font = `${fontSize}px Helvetica Neue`;
+    ctx.font = `bold ${fontSize}px  Helvetica Neue`;
     ctx.textAlign = "center";
     let rowSpace = h / instructions.length + 1;
     for(let i = 0; i < instructions.length; i++) {

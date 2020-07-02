@@ -11,10 +11,11 @@ let gridSize = document.getElementById('gridRange');
 let type = document.getElementById('type');
 let form = document.getElementById('gridForm');
 
+//minimum dimension; 
+let minDim = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
 
-let WIDTH = canvas.width = window.innerWidth;
-let HEIGHT = canvas.height = window.innerHeight;
-
+let WIDTH = canvas.width = minDim
+let HEIGHT = canvas.height = minDim;
 
 let SCALE;
 let w;
@@ -74,29 +75,62 @@ canvas.addEventListener('touchstart', e => isDrawing = true);
 canvas.addEventListener('touchmove', changeMobile);
 canvas.addEventListener('touchend', e => isDrawing = false);
 
-function change(e) {
+// function change(e) {
     
-    let tx = Math.floor(e.offsetX / h);
-    let ty = Math.floor(e.offsetY / h);
-    console.log(e.offsetX,e.offsetY)
-    if(isDrawing && isValidLocation(drawingGrid,ty,tx)) {
-        let pixel  = drawingGrid[ty][tx];
+//     let tx = Math.floor(e.offsetX / h);
+//     let ty = Math.floor(e.offsetY / h);
+//     if(isDrawing && isValidLocation(drawingGrid,ty,tx)) {
+//         let pixel  = drawingGrid[ty][tx];
     
-        position[type.value]  = changePixelType(ctx,type.value,pixel);
-    }
-}
+//         position[type.value]  = changePixelType(ctx,type.value,pixel);
+//     }
+// }
+
+function change (e) {
+    let mouseX = e.offsetX;
+    let mouseY = e.offsetY;
+
+    drawingGrid.forEach(row => {
+        row.forEach(node => {
+
+            if(isDrawing && node.isClicked(mouseX, mouseY)) {
+               position[type.value] = changePixelType(ctx,type.value, node)
+            }
+        })
+
+    })
+
+};
+
+// function changeMobile (e) {
+
+//     let rect = e.target.getBoundingClientRect();
+//     let x = Math.floor((e.targetTouches[0].pageX - rect.left/10));
+//     let y = Math.floor((e.targetTouches[0].pageY - rect.top)/10);
+
+//     if(isDrawing && isValidLocation(drawingGrid,y,x)) {
+//         let pixel  = drawingGrid[y][x];
+    
+//         position[type.value]  = changePixelType(ctx,type.value,pixel);
+//     }
+
+// }
 
 function changeMobile (e) {
-
     let rect = e.target.getBoundingClientRect();
-    let x = Math.floor((e.targetTouches[0].pageX - rect.left)/10);
-    let y = Math.floor((e.targetTouches[0].pageY - rect.top)/10);
+    let x = e.targetTouches[0].pageX - rect.left;
+    let y = e.targetTouches[0].pageY - rect.top;
 
-    if(isDrawing && isValidLocation(drawingGrid,y,x)) {
-        let pixel  = drawingGrid[y][x];
-    
-        position[type.value]  = changePixelType(ctx,type.value,pixel);
-    }
+    drawingGrid.forEach(row => {
+        row.forEach(node => {
+
+            if(isDrawing && node.isClicked(x, y)) {
+                console.log('this is happening')
+               position[type.value] = changePixelType(ctx,type.value, node)
+            }
+        })
+
+    })
 
 }
 
@@ -106,23 +140,5 @@ function findOurWayHome (e) {
 
 
     newSearch.timedFindPath(ctx);
-
-}
-
-
-function testClick (e) {
-    let x = e.offsetX;
-    let y = e.offsetY;
-    drawingGrid.forEach(row => {
-        row.forEach(node=> {
-            if(node.isClicked(x,y)) {
-                
-                node.isWall = true;
-                node.draw(ctx,'yellow');
-                // debugger;
-            }
-        })
-    })
-
 
 }

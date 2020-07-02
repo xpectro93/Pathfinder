@@ -15,9 +15,8 @@ class Node {
         this.f = 0;
 
         this.width = WIDTH;
-        this.height = HEIGHT;
+        this.height = WIDTH;
         this.isWall = isWall;
-        this.neighbors = [];
         this.previous;
     }
 
@@ -25,9 +24,9 @@ class Node {
         let pixelX = this.x * this.width;
         let pixelY = this.y * this.height;
 
-       let leftRight = mouseX > pixelX && mouseX < pixelX + this.width;
+       let leftRight =( mouseX > pixelX) && (mouseX < (pixelX + this.width));
 
-       let topBottom = mouseY > pixelY && mouseY < pixelY + this.height;
+       let topBottom = (mouseY > pixelY) && (mouseY < (pixelY + this.width));
        return topBottom && leftRight;
     }
     // clicked(mx,my) {
@@ -40,7 +39,7 @@ class Node {
     getNeighbors (grid) {
         //This could be a property of the class?
         let moves = [[-1,0],[0,1],[1,0],[0,-1]];
-
+        let neighbors = [];
         for (let move of moves) {
 
             const [row,col] = move;
@@ -50,11 +49,11 @@ class Node {
                 //if it is not a wall, then we add this to our valid neighbors array;
                 if(isValidLocation(grid,nr,nc) && !grid[nr][nc].isWall) {
 
-                    this.neighbors.push(grid[nr][nc]);
+                    neighbors.push(grid[nr][nc]);
                 }
         }
         
-        return this.neighbors
+        return neighbors
     }
     draw(ctx,color) {
         ctx.fillStyle = color;
