@@ -36,11 +36,11 @@ class Prim {
 
     step(ctx) {
         this.start.isWall = false;
-
+        this.start.draw(ctx,"white")
         this.frontier.push(...this.start.primNeighbors(this.grid,2,true));
       while(this.frontier.length) {
-        let randomIdx = Math.floor(Math.random() * this.frontier.length);
 
+        let randomIdx = Math.floor(Math.random() * this.frontier.length);
         let currentWall = this.frontier[randomIdx];
 
         let n = currentWall.primNeighbors(this.grid,2,false);
@@ -48,23 +48,23 @@ class Prim {
         if(n.length === 1) {
             
             currentWall.isWall = false;
-            currentWall.draw(ctx, "pink")
+            currentWall.draw(ctx, "white")
             let d = this.connectionDirection(currentWall,n[0]);
-            let posX = currentWall.x + d[0]
-            let posY = currentWall.y + d[1] 
+            let posX = n[0].x + d[0]
+            let posY = n[0].y + d[1] 
             if(isValidLocation(this.grid,posY,posX)) {
                 let connection = this.grid[posY][posX];
                 connection.isWall = false;
-                connection.draw(ctx,"pink");
-                this.frontier.push(...connection.primNeighbors(this.grid,2,true));
+                connection.draw(ctx,"white");
+                this.frontier.push(...currentWall.primNeighbors(this.grid,2,true));
             }
             
             
         }
-
         this.frontier.splice(randomIdx,1);
+
+        
       }
-      debugger;
       
         
     }

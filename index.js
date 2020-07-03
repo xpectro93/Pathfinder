@@ -56,7 +56,7 @@ gridSize.addEventListener('change', e => {
             ctx.strokeStyle = "black"
             ctx.strokeRect(x * w, y * h, w, h);
             let node = new Node(x,y,w,true);
-
+            node.draw(ctx,"black")
             drawingRow.push(node);
 
         }
