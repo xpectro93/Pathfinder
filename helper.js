@@ -22,11 +22,7 @@ export function drawInstructions (ctx,w,h) {
 };
 
 export function changePixelType (ctx, type, pixel) {
-    if(type === "wall") {
-        pixel.isWall = true;
-        pixel.draw(ctx,"black");
-    } 
-    else if( type === "start" ) {
+    if( type === "start" ) {
         pixel.draw(ctx,"blue");    
     }
     else if(type === "end") {
@@ -34,3 +30,4 @@ export function changePixelType (ctx, type, pixel) {
     }
     return pixel
 }
+

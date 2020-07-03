@@ -35,6 +35,7 @@ gridSize.addEventListener('change', e => {
     //Could be a function;
    type.value = "wall";
    drawingGrid = [];
+   position = {}
 
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
@@ -64,7 +65,7 @@ let isDrawing = false;
 canvas.addEventListener('mousemove', change);
 canvas.addEventListener('mousedown', _ => isDrawing = true);
 canvas.addEventListener('mouseup', _ => isDrawing = false);
-// canvas.addEventListener('click', testClick)
+canvas.addEventListener('click', clicked)
 
 form.addEventListener('submit', e=> {
     e.preventDefault();
@@ -82,8 +83,9 @@ function change (e) {
     drawingGrid.forEach(row => {
         row.forEach(node => {
 
-            if(isDrawing && node.isClicked(mouseX, mouseY)) {
-               position[type.value] = changePixelType(ctx,type.value, node)
+            if(isDrawing && node.isClicked(mouseX, mouseY) && type.value === "wall") {
+              node.isWall = true;
+              node.draw(ctx,"black")
             }
         })
 
@@ -110,10 +112,43 @@ function changeMobile (e) {
 }
 
 function findOurWayHome (e) {
-    
+    debugger
     let newSearch = new AStar(position.start, position.end,drawingGrid);
-
-
     newSearch.timedFindPath(ctx);
 
+}
+
+
+function clicked (e) {
+    let mouseX = e.offsetX;
+    let mouseY = e.offsetY;
+    if(type.value !== "wall"){
+        drawingGrid.forEach(row => {
+            row.forEach(node => {
+                if(node.isClicked(mouseX,mouseY)) {
+                    if(position[type.value]) {
+                        let p = position[type.value]
+                        // debugger
+                        ctx.strokeStyle = "black"
+                        ctx.strokeRect(p.x * p.dimension, p.y * p.dimension,p.dimension,p.dimension);
+                        position[type.value].draw(ctx,"white");
+                        position[type.value] = node;
+                        changePixelType(ctx,type.value,node)
+                       
+                    }
+                    else {
+                        position[type.value] = node;
+                        changePixelType(ctx,type.value,node)
+                    }
+        
+                }
+                
+                
+            })
+    
+    
+        })
+
+    }
+    
 }

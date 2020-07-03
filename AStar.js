@@ -30,6 +30,7 @@ class AStar {
             for(let i = 0; i < this.openSet.length;i++) {
 
                 //TODO:Change this to priority queue/minhheap for O(1) lookup
+
                 //check if a Node in openSet has Lower f than current lowest f
                 if(this.openSet[lowestFIndex].f > this.openSet[i].f) {
                     lowestFIndex = i
@@ -108,12 +109,10 @@ class AStar {
         if(!this.openSet.length) {
             console.log('no path found');
             ctx.fillStyle = "black";
-            ctx.strokeStyle = "pink"
             ctx.font = `50px Helvetica Neue`;
             ctx.textAlign = "center";
-            let dim = this.grid[0][0].width * this.grid.length
-            console.log(dim)
-            ctx.fillText("No Path Available", (dim / 4),dim/4);
+            let dim = this.grid[0][0].dimension * this.grid.length;
+            ctx.fillText("No Path Available", (dim / 2),dim/4);
              
 
             clearInterval(search);
@@ -135,7 +134,7 @@ class AStar {
             //If F values are tied check manhattan distance;-
             //if distance of end node is shorter. It becomes new lowest F 
             if(this.openSet[lowestFIndex].f === this.openSet[i].f) {
-                if(this.openSet[lowestFIndex].h >= this.openSet[i].h) {
+                if(this.openSet[lowestFIndex].h > this.openSet[i].h) {
                     console.log('deciding')
                     lowestFIndex = i;
                 }
@@ -149,7 +148,7 @@ class AStar {
         let current =  this.openSet[lowestFIndex];
         this.lastNode = current;
 
-        this.closedSet.forEach(node =>node.draw(ctx, 'rgb(8,69,113)'))
+        this.closedSet.forEach(node =>node.draw(ctx, 'lightblue'))
 
         let currentPath = this.constructPath();
         currentPath.forEach(node => node.draw(ctx,"rgb(216,255,255)"))
@@ -193,7 +192,7 @@ class AStar {
 
                 //add to queue to items to be explored
                 if(!this.openSet.includes(neighbor)) {
-                    neighbor.draw(ctx,"rgb(8,69,113)")
+                    neighbor.draw(ctx,"rgba(8,69,113,01)")
                     this.openSet.push(neighbor)
                 };
             }
