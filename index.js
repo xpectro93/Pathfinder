@@ -55,7 +55,7 @@ gridSize.addEventListener('change', e => {
             //x,y,w,h
             ctx.strokeStyle = "black"
             ctx.strokeRect(x * w, y * h, w, h);
-            let node = new Node(x,y,w);
+            let node = new Node(x,y,w,true);
 
             drawingRow.push(node);
 
@@ -68,7 +68,7 @@ gridSize.addEventListener('change', e => {
     let randomNode = drawingGrid[randomNodeX][randomNodeY];
     
     let newPrim = new Prim(randomNode, drawingGrid);
-    newPrim.doTheThing(ctx);
+    newPrim.step(ctx);
 
 })
 

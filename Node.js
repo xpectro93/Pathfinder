@@ -1,7 +1,7 @@
 import { isValidLocation } from "./helper.js"
 class Node {
     // WIDTH and HEIGHT are their pixel dimensions based on grid size;
-    constructor(x,y,dimension) {
+    constructor(x,y,dimension,isWall = false) {
         this.x = x;
         this.y = y;
         
@@ -15,7 +15,7 @@ class Node {
         this.f = 0;
 
         this.dimension = dimension 
-        this.isWall = false;
+        this.isWall = isWall;
         this.previous;
     }
 
@@ -43,6 +43,25 @@ class Node {
 
                 //if it is not a wall, then we add this to our valid neighbors array;
                 if(isValidLocation(grid,nr,nc) && !grid[nr][nc].isWall) {
+
+                    neighbors.push(grid[nr][nc]);
+                }
+        }
+        
+        return neighbors
+    }
+    primNeighbors(grid) {
+        // Could be a property of the class?
+        let moves = [[-2,0],[0,2],[2,0],[0,-2]];
+        let neighbors = [];
+        for (let move of moves) {
+
+            const [row,col] = move;
+            let nr = row + this.y;
+            let nc = col + this.x;
+
+                //if it is not a wall, then we add this to our valid neighbors array;
+                if(isValidLocation(grid,nr,nc) && grid[nr][nc].isWall) {
 
                     neighbors.push(grid[nr][nc]);
                 }
