@@ -50,9 +50,9 @@ class Node {
         
         return neighbors
     }
-    primNeighbors(grid) {
+    primNeighbors(grid, d, isWall) {
         // Could be a property of the class?
-        let moves = [[-2,0],[0,2],[2,0],[0,-2]];
+        let moves = [[-d,0],[0,d],[d,0],[0,-d]];
         let neighbors = [];
         for (let move of moves) {
 
@@ -61,7 +61,7 @@ class Node {
             let nc = col + this.x;
 
                 //if it is not a wall, then we add this to our valid neighbors array;
-                if(isValidLocation(grid,nr,nc) && grid[nr][nc].isWall) {
+                if(isValidLocation(grid,nr,nc) && (isWall === grid[nr][nc].isWall)) {
 
                     neighbors.push(grid[nr][nc]);
                 }

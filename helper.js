@@ -30,3 +30,5 @@ export function changePixelType (ctx, type, pixel) {
     }
     return pixel
 }
+
+

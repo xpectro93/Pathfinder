@@ -1,18 +1,21 @@
+import { isValidLocation } from './helper.js';
+
 class Prim {
     constructor(randomVertex,grid) {
         // 1. Start with a grid full of walls.
         this.grid = grid;
-        this.frontier = [randomVertex];
+        this.frontier = [];
         this.visited = [];
+        this.start = randomVertex;
 
     }
     getDistance (a,b) {
         return Math.hypot(b.x - a.x, b.y - a.y);
     }
 
-    connectionDirection (randomFrontier, vertex) {
-        let x = randomFrontier.x - vertex.x;
-        let y = randomFrontier.y - vertex.y;
+    connectionDirection (randomWall, vertex) {
+        let x = randomWall.x - vertex.x;
+        let y = randomWall.y - vertex.y;
         //top
         if(x === 0 && y === -2) {
             return [0,-1];
@@ -32,50 +35,37 @@ class Prim {
     }
 
     step(ctx) {
-        //mark random
-        
-    //   let start = this.frontier[0];
-    //   let neighbors = start.primNeighbors(this.grid);
-    //   start.draw(ctx,"red");
-    //   this.visited.add(start);
-    //   this.frontier.push(...neighbors);
-    //   this.frontier.splice(0,1);
+        this.start.isWall = false;
 
+        this.frontier.push(...this.start.primNeighbors(this.grid,2,true));
       while(this.frontier.length) {
         let randomIdx = Math.floor(Math.random() * this.frontier.length);
-        // debugger
-        let current = this.frontier.splice(randomIdx,1);
-        current = current.pop();
-        current.draw(ctx,"red")
-        this.visited.push(current);
 
-        let n = current.primNeighbors(this.grid);
-        this.frontier.push(...n);
+        let currentWall = this.frontier[randomIdx];
 
-        let randFrontier =  this.frontier[Math.floor(Math.random() * this.frontier.length)];
+        let n = currentWall.primNeighbors(this.grid,2,false);
 
-        this.frontier.forEach(thing => thing.draw(ctx, "blue"));
-        randFrontier.draw(ctx,"cyan");
+        if(n.length === 1) {
+            
+            currentWall.isWall = false;
+            currentWall.draw(ctx, "pink")
+            let d = this.connectionDirection(currentWall,n[0]);
+            let posX = currentWall.x + d[0]
+            let posY = currentWall.y + d[1] 
+            if(isValidLocation(this.grid,posY,posX)) {
+                let connection = this.grid[posY][posX];
+                connection.isWall = false;
+                connection.draw(ctx,"pink");
+                this.frontier.push(...connection.primNeighbors(this.grid,2,true));
+            }
+            
+            
+        }
 
-        this.visited.forEach(vertex => {
-          let distance =   this.getDistance(vertex, randFrontier);
-          if(distance <= 2) {
-              let direction = this.connectionDirection(randFrontier, vertex);
-              this.grid[vertex.y + direction[1]][vertex.x + direction[0]].isWall = false;
-              
-          }
-        })
-
-
-         break
-
-            // random vertex
-            // -- frontier is part of maze
-            // add  neighbors to frontier array;
-            //pick random cell from frontier;
-            //connect to the  cell that is already part of the maze(pathSet)
-            // add the neighbors from the random 
+        this.frontier.splice(randomIdx,1);
       }
+      debugger;
+      
         
     }
 }
