@@ -1,5 +1,7 @@
 import Node from '/Node.js';
 import AStar from './AStar.js';
+import Prim  from './Prim.js';
+
 import { drawInstructions, changePixelType} from './helper.js'
 
 //Grab Canvas from DOM;
@@ -36,6 +38,10 @@ let position = {};
 let drawingGrid = [];
 gridSize.addEventListener('change', e => {
 
+
+    
+    
+
     reset();
     //convert range input to number
     SCALE = Number(e.target.value);
@@ -57,7 +63,17 @@ gridSize.addEventListener('change', e => {
         drawingGrid.push(drawingRow);
     }
 
+    let randomNodeX = Math.floor(Math.random() * drawingGrid.length);
+    let randomNodeY = Math.floor(Math.random() * drawingGrid.length);
+    let randomNode = drawingGrid[randomNodeX][randomNodeY];
+    
+    let newPrim = new Prim(randomNode, drawingGrid);
+    newPrim.doTheThing(ctx);
+
 })
+
+
+
 
 let isDrawing = false;
 canvas.addEventListener('mousemove', change);
