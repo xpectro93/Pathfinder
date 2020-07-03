@@ -1,6 +1,6 @@
 import Node from '/Node.js';
 import AStar from './AStar.js';
-import { drawInstructions, changePixelType } from './helper.js'
+import { drawInstructions, changePixelType} from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -20,7 +20,13 @@ let HEIGHT = canvas.height = minDim;
 let SCALE;
 let w;
 let h;
-
+window.addEventListener('resize',() => {
+    minDim = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
+    WIDTH = canvas.width = minDim
+    HEIGHT = canvas.height = minDim;
+    reset();
+    drawInstructions(ctx,WIDTH,HEIGHT);
+});
 
 drawInstructions(ctx,WIDTH,HEIGHT)
 
@@ -30,15 +36,7 @@ let position = {};
 let drawingGrid = [];
 gridSize.addEventListener('change', e => {
 
-    //clear node grid;
-    //TODO: Add rest of the clearing values
-    //Could be a function;
-   type.value = "wall";
-   drawingGrid = [];
-   position = {}
-
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-
+    reset();
     //convert range input to number
     SCALE = Number(e.target.value);
 
@@ -112,9 +110,11 @@ function changeMobile (e) {
 }
 
 function findOurWayHome (e) {
-    debugger
-    let newSearch = new AStar(position.start, position.end,drawingGrid);
-    newSearch.timedFindPath(ctx);
+    if(position.start && position.end) {
+        let newSearch = new AStar(position.start, position.end,drawingGrid);
+        newSearch.timedFindPath(ctx);
+    }
+    
 
 }
 
@@ -128,7 +128,6 @@ function clicked (e) {
                 if(node.isClicked(mouseX,mouseY)) {
                     if(position[type.value]) {
                         let p = position[type.value]
-                        // debugger
                         ctx.strokeStyle = "black"
                         ctx.strokeRect(p.x * p.dimension, p.y * p.dimension,p.dimension,p.dimension);
                         position[type.value].draw(ctx,"white");
@@ -151,4 +150,11 @@ function clicked (e) {
 
     }
     
+}
+
+function reset() {
+    type.value = "wall";
+    drawingGrid = [];
+    position = {};
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
