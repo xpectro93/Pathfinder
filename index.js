@@ -37,12 +37,10 @@ let position = {};
 
 let drawingGrid = [];
 gridSize.addEventListener('change', e => {
-
-
-    
-    
-
+ 
+    //reset form and canvas if there is a change
     reset();
+
     //convert range input to number
     SCALE = Number(e.target.value);
 
