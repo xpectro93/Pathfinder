@@ -38,33 +38,33 @@ class Prim {
         this.start.isWall = false;
         this.start.draw(ctx,"white")
         this.frontier.push(...this.start.primNeighbors(this.grid,2,true));
-      while(this.frontier.length) {
+        while(this.frontier.length) {
 
-        let randomIdx = Math.floor(Math.random() * this.frontier.length);
-        let currentWall = this.frontier[randomIdx];
+            let randomIdx = Math.floor(Math.random() * this.frontier.length);
+            let currentWall = this.frontier[randomIdx];
 
-        let n = currentWall.primNeighbors(this.grid,2,false);
+            let n = currentWall.primNeighbors(this.grid,2,false);
 
-        if(n.length === 1) {
-            
-            currentWall.isWall = false;
-            currentWall.draw(ctx, "white")
-            let d = this.connectionDirection(currentWall,n[0]);
-            let posX = n[0].x + d[0]
-            let posY = n[0].y + d[1] 
-            if(isValidLocation(this.grid,posY,posX)) {
-                let connection = this.grid[posY][posX];
-                connection.isWall = false;
-                connection.draw(ctx,"white");
-                this.frontier.push(...currentWall.primNeighbors(this.grid,2,true));
+            if(n.length === 1) {
+                
+                currentWall.isWall = false;
+                currentWall.draw(ctx, "white")
+                let d = this.connectionDirection(currentWall,n[0]);
+                let posX = n[0].x + d[0]
+                let posY = n[0].y + d[1] 
+                if(isValidLocation(this.grid,posY,posX)) {
+                    let connection = this.grid[posY][posX];
+                    connection.isWall = false;
+                    connection.draw(ctx,"white");
+                    this.frontier.push(...currentWall.primNeighbors(this.grid,2,true));
+                }
+                
+                
             }
-            
+            this.frontier.splice(randomIdx,1);
+
             
         }
-        this.frontier.splice(randomIdx,1);
-
-        
-      }
       
         
     }
