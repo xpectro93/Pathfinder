@@ -21,6 +21,13 @@ export function drawInstructions (ctx,w,h) {
     
 };
 
+export function drawNoPath (ctx,size) {
+    ctx.fillStyle = "white";
+    ctx.font = `50px Helvetica Neue`;
+    ctx.textAlign = "center";
+    ctx.fillText("No Path Available", (size / 2),size/4);
+}
+
 export function changePixelType (ctx, type, pixel) {
     if( type === "start" ) {
         pixel.draw(ctx,"blue");    

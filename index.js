@@ -2,16 +2,16 @@ import Node from '/Node.js';
 import AStar from './AStar.js';
 import Prim  from './Prim.js';
 
-import { drawInstructions, changePixelType} from './helper.js'
+import { drawInstructions, drawNoPath, changePixelType} from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
 let ctx = canvas.getContext('2d');
 
 //Grab form elements from body;
-let gridSize = document.getElementById('gridRange');
-let type = document.getElementById('type');
 let form = document.getElementById('gridForm');
+let gridSlider = document.getElementById('gridRange');
+let type = document.getElementById('type');
 
 //minimum dimension; 
 let minDim = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
@@ -32,11 +32,11 @@ window.addEventListener('resize',() => {
 
 drawInstructions(ctx,WIDTH,HEIGHT)
 
-//Position
+//start and endposition
 let position = {};
 
 let drawingGrid = [];
-gridSize.addEventListener('change', e => {
+gridSlider.addEventListener('change', e => {
  
     //reset form and canvas if there is a change
     reset();
@@ -126,7 +126,29 @@ function changeMobile (e) {
 function findOurWayHome (e) {
     if(position.start && position.end) {
         let newSearch = new AStar(position.start, position.end,drawingGrid);
-        newSearch.timedFindPath(ctx);
+
+        let search = setInterval(() => {
+            let stepValue = newSearch.purePathFinder();
+            if(!newSearch.openSet.length) {
+                drawNoPath(ctx, minDim);
+                clearInterval(search);
+            }
+            if(stepValue === 1) {
+                console.log('win');
+                newSearch.showPath(ctx)
+                clearInterval(search);
+
+            }
+            newSearch.openSet.forEach(vertex => {
+                vertex.draw(ctx,"pink");
+            })
+            newSearch.closedSet.forEach(vertex => {
+                vertex.draw(ctx,"grey");
+            })
+            
+
+
+        },5)
     }
     
 
