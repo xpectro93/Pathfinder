@@ -1,7 +1,7 @@
 import { isValidLocation } from "./helper.js"
 class Node {
     // WIDTH and HEIGHT are their pixel dimensions based on grid size;
-    constructor(x,y,dimension,isWall = false) {
+    constructor(x,y,size,isWall = false) {
         this.x = x;
         this.y = y;
         
@@ -14,43 +14,23 @@ class Node {
         // f = g + h
         this.f = 0;
 
-        this.dimension = dimension 
+        this.size = size 
         this.isWall = isWall;
         this.previous;
     }
 
     isClicked (mouseX, mouseY) {
-        let pixelX = this.x * this.dimension;
-        let pixelY = this.y * this.dimension;
+        let pixelX = this.x * this.size;
+        let pixelY = this.y * this.size;
 
-       let leftRight = (mouseX > pixelX) && (mouseX < (pixelX + this.dimension));
+       let leftRight = (mouseX > pixelX) && (mouseX < (pixelX + this.size));
 
-       let topBottom = (mouseY > pixelY) && (mouseY < (pixelY + this.dimension));
+       let topBottom = (mouseY > pixelY) && (mouseY < (pixelY + this.size));
        return topBottom && leftRight;
     }
 
-
-    //grid is the matrix of Nodes
-    getNeighbors (grid) {
-        // Could be a property of the class?
-        let moves = [[-1,0],[0,1],[1,0],[0,-1]];
-        let neighbors = [];
-        for (let move of moves) {
-
-            const [row,col] = move;
-            let nr = row + this.y;
-            let nc = col + this.x;
-
-                //if it is not a wall, then we add this to our valid neighbors array;
-                if(isValidLocation(grid,nr,nc) && !grid[nr][nc].isWall) {
-
-                    neighbors.push(grid[nr][nc]);
-                }
-        }
-        
-        return neighbors
-    }
-    primNeighbors(grid, d, isWall) {
+    //grid = mtx, d = distance, isWall = boolean
+    getNeighbors(grid, d, isWall) {
         // Could be a property of the class?
         let moves = [[-d,0],[0,d],[d,0],[0,-d]];
         let neighbors = [];
@@ -70,12 +50,9 @@ class Node {
         return neighbors
     }
     draw(ctx,color) {
-        const { dimension, x, y } = this;
-
-        ctx.shadowColor = color;
-        ctx.shadowBlur = 3
+        const { size, x, y } = this;
         ctx.fillStyle = color;
-        ctx.fillRect(x * dimension, y * dimension, dimension, dimension);
+        ctx.fillRect(x * size, y * size, size, size);
         
     }
 

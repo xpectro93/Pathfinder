@@ -37,13 +37,13 @@ class Prim {
     step(ctx) {
         this.start.isWall = false;
         this.start.draw(ctx,"white")
-        this.frontier.push(...this.start.primNeighbors(this.grid,2,true));
+        this.frontier.push(...this.start.getNeighbors(this.grid,2,true));
         while(this.frontier.length) {
 
             let randomIdx = Math.floor(Math.random() * this.frontier.length);
             let currentWall = this.frontier[randomIdx];
 
-            let n = currentWall.primNeighbors(this.grid,2,false);
+            let n = currentWall.getNeighbors(this.grid,2,false);
 
             if(n.length === 1) {
                 
@@ -56,7 +56,7 @@ class Prim {
                     let connection = this.grid[posY][posX];
                     connection.isWall = false;
                     connection.draw(ctx,"white");
-                    this.frontier.push(...currentWall.primNeighbors(this.grid,2,true));
+                    this.frontier.push(...currentWall.getNeighbors(this.grid,2,true));
                 }
                 
                 

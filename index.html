@@ -18,12 +18,11 @@
 
             Grid Size
             <input id="gridRange" type="range" min="20" step="5" max="100"/>
-            <div id="mazeType">
-                <input type="radio" id="draw" name="gridType" value="draw">
-                <label for="draw">Draw my own maze</label>
-                <input type="radio" id="prim" name="gridType" value="prim">
-                <label for="prim">Draw Prims maze</label>
-            </div>
+            <select name="maze" id="mazeType">
+                <option disabled>Pick maze type</option>
+                <option value="draw">Draw my own maze </option>
+                <option value="prim">Draw Prims maze</option>
+            </select>
             Pick pixel type (walls, start, end)
             <select name="type" id="type">
                 <option value="wall"> wall </option>

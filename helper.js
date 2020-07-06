@@ -1,6 +1,46 @@
+import Prim from "./Prim.js";
+import Node from '/Node.js';
 export function isValidLocation (mtx, y,x) {
     return   mtx[y] && mtx[y][x]!== undefined
 }
+
+export function createBoard (ctx,size,scale,algoType) {
+    let newDrawingGrid = [];
+    for (let y = 0; y < scale; y++) {
+        let drawingRow = [];
+        for (let x = 0; x < scale; x++) {
+            let node;
+            //x,y,w,h
+            ctx.strokeStyle = "black"
+            ctx.strokeRect(x * size, y * size, size, size);
+            if(algoType === "prim") {
+                console.log(algoType)
+             node = new Node(x,y,size,true);
+                node.draw(ctx,"black")
+            }
+            else {
+             node = new Node(x,y,size,false);
+            }
+            
+            drawingRow.push(node);
+
+        }
+        newDrawingGrid.push(drawingRow);
+    }
+    if(algoType === "prim") {
+        
+        let randomNodeX = Math.floor(Math.random() * newDrawingGrid.length);
+        let randomNodeY = Math.floor(Math.random() * newDrawingGrid.length);
+        let randomNode = newDrawingGrid[randomNodeX][randomNodeY];
+        
+        let newPrim = new Prim(randomNode, newDrawingGrid);
+        debugger
+        newPrim.step(ctx);
+    }
+    return newDrawingGrid;
+}
+
+
 export function drawInstructions (ctx,w,h) {
     let instructions = ["filler",
                         "INSTRUCTIONS",

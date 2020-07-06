@@ -1,8 +1,7 @@
-import Node from '/Node.js';
-import AStar from './AStar.js';
-import Prim  from './Prim.js';
 
-import { drawInstructions, drawNoPath, changePixelType} from './helper.js'
+import AStar from './AStar.js';
+
+import { drawInstructions, drawNoPath, changePixelType , createBoard } from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -20,8 +19,7 @@ let WIDTH = canvas.width = minDim
 let HEIGHT = canvas.height = minDim;
 
 let SCALE;
-let w;
-let h;
+let size;
 window.addEventListener('resize',() => {
     minDim = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
     WIDTH = canvas.width = minDim
@@ -44,29 +42,24 @@ gridSlider.addEventListener('change', e => {
     //convert range input to number
     SCALE = Number(e.target.value);
 
-    w = (WIDTH / SCALE);
-    h = (HEIGHT / SCALE);
+    size = WIDTH / SCALE;
 
-    for (let y = 0; y < SCALE; y++) {
-        let drawingRow = [];
-        for (let x = 0; x < SCALE; x++) {
-            //x,y,w,h
-            ctx.strokeStyle = "black"
-            ctx.strokeRect(x * w, y * h, w, h);
-            let node = new Node(x,y,w,true);
-            node.draw(ctx,"black")
-            drawingRow.push(node);
+    // for (let y = 0; y < SCALE; y++) {
+    //     let drawingRow = [];
+    //     for (let x = 0; x < SCALE; x++) {
+    //         //x,y,w,h
+    //         ctx.strokeStyle = "black"
+    //         ctx.strokeRect(x * w, y * h, w, h);
+    //         let node = new Node(x,y,w,true);
+    //         node.draw(ctx,"black")
+    //         drawingRow.push(node);
 
-        }
-        drawingGrid.push(drawingRow);
-    }
+    //     }
+    //     drawingGrid.push(drawingRow);
+    // }
 
-    let randomNodeX = Math.floor(Math.random() * drawingGrid.length);
-    let randomNodeY = Math.floor(Math.random() * drawingGrid.length);
-    let randomNode = drawingGrid[randomNodeX][randomNodeY];
+    drawingGrid = createBoard(ctx, size,SCALE,"draw")
     
-    let newPrim = new Prim(randomNode, drawingGrid);
-    newPrim.step(ctx);
 
 })
 
@@ -128,7 +121,7 @@ function findOurWayHome (e) {
         let newSearch = new AStar(position.start, position.end,drawingGrid);
 
         let search = setInterval(() => {
-            let stepValue = newSearch.purePathFinder();
+            let stepValue = newSearch.step();
             if(!newSearch.openSet.length) {
                 drawNoPath(ctx, minDim);
                 clearInterval(search);
@@ -140,11 +133,15 @@ function findOurWayHome (e) {
 
             }
             newSearch.openSet.forEach(vertex => {
-                vertex.draw(ctx,"pink");
+                vertex.draw(ctx,"blue");
             })
+
             newSearch.closedSet.forEach(vertex => {
                 vertex.draw(ctx,"grey");
             })
+            let currentPath = newSearch.constructPath();
+            currentPath.forEach(vertex => vertex.draw(ctx,"purple"))
+
             
 
 
@@ -165,7 +162,7 @@ function clicked (e) {
                     if(position[type.value]) {
                         let p = position[type.value]
                         ctx.strokeStyle = "black"
-                        ctx.strokeRect(p.x * p.dimension, p.y * p.dimension,p.dimension,p.dimension);
+                        ctx.strokeRect(p.x * p.size, p.y * p.size,p.size,p.size);
                         position[type.value].draw(ctx,"white");
                         position[type.value] = node;
                         changePixelType(ctx,type.value,node)

@@ -19,7 +19,7 @@ class AStar {
         return newX + newY;
     }
 
-    purePathFinder () {
+    step () {
 
         //while theres items in the queue we keep looking
 
@@ -66,7 +66,7 @@ class AStar {
             this.openSet = this.openSet.filter(node => node !== current);
             // current.visited = true;
             this.closedSet.add(current);
-            let currentNeighbors = current.getNeighbors(this.grid);
+            let currentNeighbors = current.getNeighbors(this.grid,1, false);
 
             for(let neighbor of currentNeighbors) {
 
