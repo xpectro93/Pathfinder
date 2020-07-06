@@ -104,7 +104,7 @@ function changeMobile (e) {
 
 }
 
-function useAStar (e) {
+function useAStar () {
     if(position.start && position.end) {
         let newSearch = new AStar(position.start, position.end,drawingGrid);
 

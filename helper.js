@@ -34,14 +34,13 @@ export function createBoard (ctx,size,scale,algoType) {
         let randomNode = newDrawingGrid[randomNodeX][randomNodeY];
         
         let newPrim = new Prim(randomNode, newDrawingGrid);
-        debugger
         newPrim.step(ctx);
     }
     return newDrawingGrid;
 }
 
 
-export function drawInstructions (ctx,w,h) {
+export function drawInstructions (ctx,w) {
     let instructions = ["filler",
                         "INSTRUCTIONS",
                      "1. Pick Grid size",
@@ -54,7 +53,7 @@ export function drawInstructions (ctx,w,h) {
     ctx.fillStyle = "black";
     ctx.font = `bold ${fontSize}px  Helvetica Neue`;
     ctx.textAlign = "center";
-    let rowSpace = h / instructions.length + 1;
+    let rowSpace = w / instructions.length + 1;
     for(let i = 0; i < instructions.length; i++) {
         ctx.fillText(instructions[i], w/2,rowSpace*i);
     }

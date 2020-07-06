@@ -9,9 +9,6 @@ class Prim {
         this.start = randomVertex;
 
     }
-    getDistance (a,b) {
-        return Math.hypot(b.x - a.x, b.y - a.y);
-    }
 
     connectionDirection (randomWall, vertex) {
         let x = randomWall.x - vertex.x;
