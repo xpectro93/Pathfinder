@@ -11,24 +11,16 @@ let ctx = canvas.getContext('2d');
 let form = document.getElementById('gridForm');
 let gridSlider = document.getElementById('gridRange');
 let type = document.getElementById('type');
-
+let mazeType = document.getElementById("mazeType");
 //minimum dimension; 
-let minDim = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
+let minDim = Math.min(window.innerHeight, window.innerWidth)
 
-let WIDTH = canvas.width = minDim
-let HEIGHT = canvas.height = minDim;
+canvas.width = minDim
+canvas.height = minDim;
 
 let SCALE;
-let size;
-window.addEventListener('resize',() => {
-    minDim = window.innerHeight > window.innerWidth ? window.innerWidth : window.innerHeight;
-    WIDTH = canvas.width = minDim
-    HEIGHT = canvas.height = minDim;
-    reset();
-    drawInstructions(ctx,WIDTH,HEIGHT);
-});
-
-drawInstructions(ctx,WIDTH,HEIGHT)
+let SIZE;
+drawInstructions(ctx,minDim,minDim)
 
 //start and endposition
 let position = {};
@@ -41,26 +33,14 @@ gridSlider.addEventListener('change', e => {
 
     //convert range input to number
     SCALE = Number(e.target.value);
+    SIZE = minDim / SCALE
 
-    size = WIDTH / SCALE;
+    drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value) ;  
+});
 
-    // for (let y = 0; y < SCALE; y++) {
-    //     let drawingRow = [];
-    //     for (let x = 0; x < SCALE; x++) {
-    //         //x,y,w,h
-    //         ctx.strokeStyle = "black"
-    //         ctx.strokeRect(x * w, y * h, w, h);
-    //         let node = new Node(x,y,w,true);
-    //         node.draw(ctx,"black")
-    //         drawingRow.push(node);
-
-    //     }
-    //     drawingGrid.push(drawingRow);
-    // }
-
-    drawingGrid = createBoard(ctx, size,SCALE,"draw")
-    
-
+mazeType.addEventListener('change', e => {
+    reset();
+    drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value)
 })
 
 
@@ -70,11 +50,19 @@ let isDrawing = false;
 canvas.addEventListener('mousemove', change);
 canvas.addEventListener('mousedown', _ => isDrawing = true);
 canvas.addEventListener('mouseup', _ => isDrawing = false);
-canvas.addEventListener('click', clicked)
+canvas.addEventListener('click', clicked);
+
+window.addEventListener('resize',() => {
+    minDim =  Math.min(window.innerHeight, window.innerWidth)
+    canvas.width = minDim
+    canvas.height = minDim;
+    reset();
+    drawInstructions(ctx,minDim);
+});
 
 form.addEventListener('submit', e=> {
     e.preventDefault();
-    findOurWayHome()
+    useAStar()
 })
 //MOBILE EXPERIENCE
 canvas.addEventListener('touchstart', e => isDrawing = true);
@@ -116,7 +104,7 @@ function changeMobile (e) {
 
 }
 
-function findOurWayHome (e) {
+function useAStar (e) {
     if(position.start && position.end) {
         let newSearch = new AStar(position.start, position.end,drawingGrid);
 
@@ -157,29 +145,19 @@ function clicked (e) {
     let mouseY = e.offsetY;
     if(type.value !== "wall"){
         drawingGrid.forEach(row => {
-            row.forEach(node => {
-                if(node.isClicked(mouseX,mouseY)) {
-                    if(position[type.value]) {
-                        let p = position[type.value]
-                        ctx.strokeStyle = "black"
-                        ctx.strokeRect(p.x * p.size, p.y * p.size,p.size,p.size);
-                        position[type.value].draw(ctx,"white");
-                        position[type.value] = node;
-                        changePixelType(ctx,type.value,node)
-                       
-                    }
-                    else {
-                        position[type.value] = node;
-                        changePixelType(ctx,type.value,node)
-                    }
-        
+        row.forEach(node => {
+            if(node.isClicked(mouseX,mouseY)) {
+                if(position[type.value]) {
+                    let p = position[type.value]
+                    ctx.strokeStyle = "black"
+                    ctx.strokeRect(p.x * p.size, p.y * p.size,p.size,p.size);
+                    position[type.value].draw(ctx,"white");
+                        
                 }
-                
-                
-            })
-    
-    
-        })
+                position[type.value] = node;
+                changePixelType(ctx,type.value,node)
+            }     
+        }) })
 
     }
     
@@ -189,5 +167,5 @@ function reset() {
     type.value = "wall";
     drawingGrid = [];
     position = {};
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx.clearRect(0, 0, minDim, minDim);
 }
