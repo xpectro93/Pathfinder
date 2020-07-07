@@ -1,4 +1,4 @@
-
+console.log('test')
 import { useAStar } from './Helpers/pathHelper.js'
 import { drawInstructions, changePixelType , createBoard } from './helper.js'
 
