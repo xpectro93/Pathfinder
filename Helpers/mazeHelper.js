@@ -2,6 +2,7 @@ import Prim from "../Mazes/Prim.js";
 
 
 export function primHelper (matrix,ctx) {
+    if(!matrix.length) return;
     const randomVertexX = Math.floor(Math.random() * matrix.length);
     const randomVertexY = Math.floor(Math.random() * matrix.length);
     const randomVertex = matrix[randomVertexX][randomVertexY];

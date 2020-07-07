@@ -12,13 +12,14 @@ let form = document.getElementById('gridForm');
 let gridSlider = document.getElementById('gridRange');
 let type = document.getElementById('type');
 let mazeType = document.getElementById("mazeType");
+let resetBtn = document.getElementById("reset");
 //minimum dimension; 
 let minDim = Math.min(window.innerHeight, window.innerWidth)
 
 canvas.width = minDim;
 canvas.height = minDim;
 
-let SCALE;
+let SCALE = Number(gridSlider.value)
 let SIZE;
 drawInstructions(ctx,minDim,minDim)
 
@@ -30,7 +31,7 @@ gridSlider.addEventListener('change', e => {
  
     //reset form and canvas if there is a change
     reset();
-
+    ctx.clearRect(0, 0, minDim, minDim);
     //convert range input to number
     SCALE = Number(e.target.value);
     SIZE = minDim / SCALE
@@ -60,9 +61,13 @@ window.addEventListener('resize',() => {
     drawInstructions(ctx,minDim);
 });
 
+resetBtn.addEventListener("click",reset)
 form.addEventListener('submit', e=> {
     e.preventDefault();
-    useAStar()
+
+    if(position.start && position.end) {
+        useAStar();
+    }
 })
 //MOBILE EXPERIENCE
 canvas.addEventListener('touchstart', e => isDrawing = true);
@@ -105,7 +110,7 @@ function changeMobile (e) {
 }
 
 function useAStar (speed = 5) {
-    if(position.start && position.end) {
+    
         let newSearch = new AStar(position.start, position.end,drawingGrid);
 
         let search = setInterval(() => {
@@ -115,7 +120,6 @@ function useAStar (speed = 5) {
                 clearInterval(search);
             }
             if(stepValue === 1) {
-                console.log('win');
                 newSearch.showPath(ctx)
                 clearInterval(search);
 
@@ -130,7 +134,6 @@ function useAStar (speed = 5) {
             let currentPath = newSearch.constructPath();
             currentPath.forEach(vertex => vertex.draw(ctx,"purple"))
         },speed)
-    }
     
 
 }
@@ -171,4 +174,5 @@ function reset() {
     drawingGrid = [];
     position = {};
     ctx.clearRect(0, 0, minDim, minDim);
+    drawInstructions(ctx,minDim)
 }
