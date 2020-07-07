@@ -1,5 +1,7 @@
+* {
+    font-family: 'Audiowide', cursive;
+}
 body {
-    margin:0px;
     height:100vh;
     width:100vw;
     display:flex;
@@ -10,25 +12,28 @@ body {
     background-color:rgb(40, 44, 52);
 }
 h1 {
-    font-family: 'Audiowide', cursive;
     text-align: center;
 }
-
+select {
+    border-radius: 5px;
+}
 /* this is the canvas */
 #root {
     width:100vmin;
     height:99vmin;
     background-color:white;
     border-radius: 5px;
-    border:1px rgb(0, 253, 190) solid
+    border:3px rgb(0, 253, 190) solid
     
 } 
 form {
-    background: pink;
+    background-color:rgb(104, 114, 134);
     align-items: center;
     margin:10px;
     display: flex;
     flex-direction: column;
     padding: 2%;
     border-radius: 5px;
+    border:1px rgb(0, 253, 190) solid
 }
+

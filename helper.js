@@ -31,7 +31,7 @@ export function createBoard (ctx,size,scale,algoType) {
 
 
 export function drawInstructions (ctx,w) {
-    let instructions = [
+    let instructions = ["",
                         "INSTRUCTIONS",
                      "1. Pick Grid size",
                      "2. Draw walls",
@@ -44,8 +44,8 @@ export function drawInstructions (ctx,w) {
     ctx.font = `bold ${fontSize}px  Audiowide`;
     ctx.textAlign = "center";
     let rowSpace = w / instructions.length + 1;
-    for(let i = 0; i < instructions.length; i++) {
-        ctx.fillText(instructions[i], w/2,(rowSpace*i )+ i);
+    for(let i = 1; i < instructions.length; i++) {
+        ctx.fillText(instructions[i], w/2, rowSpace*i );
     }
     
 };

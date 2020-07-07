@@ -113,7 +113,7 @@ class AStar {
                 clearInterval(shortestPath)
             }
             
-            path[i].draw(ctx,"rgb(219,5,126)");
+            path[i].draw(ctx,"rgb(0, 253, 190)");
             i++
             
         }, 5);
