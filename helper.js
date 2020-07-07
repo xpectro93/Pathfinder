@@ -51,7 +51,7 @@ export function drawInstructions (ctx,w) {
 };
 
 export function drawNoPath (ctx,size) {
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "black";
     ctx.font = `${(size/100) * 5}px Audiowide`;
     ctx.textAlign = "center";
     ctx.fillText("No Path Available", (size / 2),size/2);

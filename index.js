@@ -20,7 +20,7 @@ canvas.height = minDim;
 
 let SCALE = Number(gridSlider.value)
 let SIZE;
-drawInstructions(ctx,minDim,minDim)
+drawInstructions(ctx,minDim)
 
 //start and endposition
 let position = {};
@@ -38,7 +38,7 @@ gridSlider.addEventListener('change', e => {
     drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value) ;  
 });
 
-mazeType.addEventListener('change', e => {
+mazeType.addEventListener('change', _ => {
     reset();
     ctx.clearRect(0, 0, minDim, minDim);
     drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value)
@@ -67,7 +67,7 @@ form.addEventListener('submit', e=> {
 
     //We can just add a check here to execute different searches
     if(position.start && position.end) {
-        useAStar(position.start, position.end, drawingGrid,5,ctx);
+        useAStar(position.start, position.end, drawingGrid,ctx);
     }
 })
 //MOBILE EXPERIENCE
