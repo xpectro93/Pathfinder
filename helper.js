@@ -9,17 +9,15 @@ export function createBoard (ctx,size,scale,algoType) {
     for (let y = 0; y < scale; y++) {
         let drawingRow = [];
         for (let x = 0; x < scale; x++) {
-            let node;
-            //x,y,w,h
+            
+            let node = new Node(x,y,size);
             ctx.strokeStyle = "black"
             ctx.strokeRect(x * size, y * size, size, size);
+
             if(algoType === "prim") {
                 console.log(algoType)
-             node = new Node(x,y,size,true);
+                node.isWall = true;
                 node.draw(ctx,"black")
-            }
-            else {
-             node = new Node(x,y,size,false);
             }
             
             drawingRow.push(node);
