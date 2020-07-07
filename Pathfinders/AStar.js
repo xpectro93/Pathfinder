@@ -103,20 +103,7 @@ class AStar {
         }
         return tempPath.reverse();
     }
-    showPath (ctx) {
-        let path = this.constructPath();
-        let i = 0;
-        let shortestPath = setInterval(() => {
-            if(i === path.length - 1) {
-                
-                clearInterval(shortestPath)
-            }
-            
-            path[i].draw(ctx,"rgb(0, 253, 190)");
-            i++
-            
-        }, 5);
-    }
+   
 }
 export default AStar;
 

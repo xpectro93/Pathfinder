@@ -3,7 +3,6 @@ import AStar from '../Pathfinders/AStar.js';
 //start and end location vertex 
 export  function useAStar (start, target, grid,ctx, speed = 5) {
     let newSearch = new AStar(start, target,grid);
-    let test = 0.1;
         let search = setInterval(() => {
             let stepValue = newSearch.step();
             if(!newSearch.openSet.length) {
@@ -11,7 +10,7 @@ export  function useAStar (start, target, grid,ctx, speed = 5) {
                 drawNoPath(ctx, newSearch.start.size * newSearch.grid.length);
             }
             if(stepValue === 1) {
-                newSearch.showPath(ctx)
+                finalPathAStar(ctx, newSearch)
                 clearInterval(search);
 
             }
@@ -24,4 +23,19 @@ export  function useAStar (start, target, grid,ctx, speed = 5) {
             currentPath.forEach(vertex => vertex.draw(ctx,"rgb(209,248,234)"))
 
         },speed)
+}
+
+function finalPathAStar (ctx,newSearch) {
+    let path = newSearch.constructPath();
+    let i = 0;
+    let shortestPath = setInterval(() => {
+        if(i === path.length - 1) {
+            
+            clearInterval(shortestPath)
+        }
+        
+        path[i].draw(ctx,"rgb(0, 253, 190)");
+        i++
+        
+    }, 5);
 }

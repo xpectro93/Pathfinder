@@ -72,12 +72,21 @@ form.addEventListener('submit', e=> {
 })
 //MOBILE EXPERIENCE
 canvas.addEventListener('touchstart', e => isDrawing = true);
-canvas.addEventListener('touchmove', changeMobile);
+canvas.addEventListener('touchmove', e=> change(e,true));
 canvas.addEventListener('touchend', e => isDrawing = false);
 
-function change (e) {
-    let mouseX = e.offsetX;
-    let mouseY = e.offsetY;
+function change (e, isMobile = false) {
+    let mouseX;
+    let mouseY;
+    //if this is on mobile, use these x and y mouse coords
+    if(isMobile) {
+        let rect = e.target.getBoundingClientRect();
+        mouseX = e.targetTouches[0].pageX - rect.left;
+        mouseY = e.targetTouches[0].pageY - rect.top;
+    }else {
+        mouseX = e.offsetX;
+        mouseY = e.offsetY;
+    }
 
     drawingGrid.forEach(row => {
         row.forEach(vertex => {
@@ -92,23 +101,6 @@ function change (e) {
 
 };
 
-
-function changeMobile (e) {
-    let rect = e.target.getBoundingClientRect();
-    let x = e.targetTouches[0].pageX - rect.left;
-    let y = e.targetTouches[0].pageY - rect.top;
-
-    drawingGrid.forEach(row => {
-        row.forEach(vertex => {
-
-            if(isDrawing && vertex.isClicked(x, y)) {
-               position[type.value] = changePixelType(ctx,type.value, vertex)
-            }
-        })
-
-    })
-
-}
 
 function clicked (e) {
     let mouseX = e.offsetX;
