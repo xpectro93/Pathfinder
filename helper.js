@@ -1,4 +1,4 @@
-import Vertex from '/Vertex.js';
+import Vertex from './Vertex.js';
 import { primHelper } from './Helpers/mazeHelper.js'
 
 export const isValidLocation = (mtx, y,x) =>  mtx[y] && mtx[y][x]!== undefined;
