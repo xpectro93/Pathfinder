@@ -129,7 +129,7 @@ function useAStar (speed = 5) {
             })
 
             newSearch.closedSet.forEach(vertex => {
-                vertex.draw(ctx,"grey");
+                vertex.draw(ctx,"rgba(204, 255, 255,0.1)");
             })
             let currentPath = newSearch.constructPath();
             currentPath.forEach(vertex => vertex.draw(ctx,"purple"))

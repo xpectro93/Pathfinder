@@ -38,9 +38,7 @@ export function drawInstructions (ctx,w) {
                      "3. Pick a starting position",
                      "4. Pick a target position",
                      "5. Click 'Draw Path'",
-                     "6. Enjoy :)",
-                     "actually,",
-                    "have a lot of fun"];
+                     "6. Enjoy :)"];
     let fontSize = (w/100) * 6;
     ctx.fillStyle = "rbg(24,24,24)";
     ctx.font = `bold ${fontSize}px  Helvetica Neue`;
