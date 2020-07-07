@@ -23,7 +23,7 @@ export function createBoard (ctx,size,scale,algoType) {
         }
         newDrawingGrid.push(drawingRow);
     }
-    
+
     if(algoType === "prim")  primHelper(newDrawingGrid,ctx);
 
     return newDrawingGrid;
@@ -31,7 +31,7 @@ export function createBoard (ctx,size,scale,algoType) {
 
 
 export function drawInstructions (ctx,w) {
-    let instructions = ["filler",
+    let instructions = [
                         "INSTRUCTIONS",
                      "1. Pick Grid size",
                      "2. Draw walls",
@@ -39,20 +39,20 @@ export function drawInstructions (ctx,w) {
                      "4. Pick a target position",
                      "5. Click 'Draw Path'",
                      "6. Enjoy :)"];
-    let fontSize = 35;
+    let fontSize = (w/100) * 6;
     ctx.fillStyle = "rbg(24,24,24)";
     ctx.font = `bold ${fontSize}px  Helvetica Neue`;
     ctx.textAlign = "center";
     let rowSpace = w / instructions.length + 1;
     for(let i = 0; i < instructions.length; i++) {
-        ctx.fillText(instructions[i], w/2,rowSpace*i);
+        ctx.fillText(instructions[i], w/2,(rowSpace*i )+ i);
     }
     
 };
 
 export function drawNoPath (ctx,size) {
     ctx.fillStyle = "white";
-    ctx.font = `50px Helvetica Neue`;
+    ctx.font = `${ (size/100) * 6} Helvetica Neue`;
     ctx.textAlign = "center";
     ctx.fillText("No Path Available", (size / 2),size/2);
 }

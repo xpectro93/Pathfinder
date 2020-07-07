@@ -6,7 +6,7 @@ export function primHelper (matrix,ctx) {
     const randomVertexY = Math.floor(Math.random() * matrix.length);
     const randomVertex = matrix[randomVertexX][randomVertexY];
 
-    
+
     let prim = new Prim(randomVertex, matrix);
     prim.start.isWall = false;
     prim.start.draw(ctx,"white");
@@ -14,7 +14,6 @@ export function primHelper (matrix,ctx) {
     
     let drawMaze = setInterval(()=> {
         if(!prim.frontier.length) {
-            console.log("finished")
             clearInterval(drawMaze);
         }
         prim.step();
