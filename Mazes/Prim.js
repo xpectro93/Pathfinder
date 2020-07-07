@@ -7,7 +7,8 @@ class Prim {
         this.frontier = [];
         this.visited = [];
         this.start = randomVertex;
-
+        this.currentWall;
+        this.connection;
     }
 
     connectionDirection (randomWall, vertex) {
@@ -31,39 +32,35 @@ class Prim {
         }
     }
 
-    step(ctx) {
-        this.start.isWall = false;
-        this.start.draw(ctx,"white")
-        this.frontier.push(...this.start.getNeighbors(this.grid,2,true));
-        while(this.frontier.length) {
+    step() {
 
-            let randomIdx = Math.floor(Math.random() * this.frontier.length);
-            let currentWall = this.frontier[randomIdx];
+        let randomIdx = Math.floor(Math.random() * this.frontier.length);
 
-            let n = currentWall.getNeighbors(this.grid,2,false);
+        this.currentWall = this.frontier[randomIdx];
+        
+        if(!this.currentWall) return;
 
-            if(n.length === 1) {
-                
-                currentWall.isWall = false;
-                currentWall.draw(ctx, "white")
-                let d = this.connectionDirection(currentWall,n[0]);
-                let posX = n[0].x + d[0]
-                let posY = n[0].y + d[1] 
-                if(isValidLocation(this.grid,posY,posX)) {
-                    let connection = this.grid[posY][posX];
-                    connection.isWall = false;
-                    connection.draw(ctx,"white");
-                    this.frontier.push(...currentWall.getNeighbors(this.grid,2,true));
-                }
-                
-                
+        let n = this.currentWall.getNeighbors(this.grid,2,false);
+        if(n.length === 1) {
+            
+            this.currentWall.isWall = false;
+
+            let d = this.connectionDirection(this.currentWall,n[0]);
+            let posX = n[0].x + d[0]
+            let posY = n[0].y + d[1] 
+
+            if(isValidLocation(this.grid,posY,posX)) {
+                this.connection = this.grid[posY][posX];
+                this.connection.isWall = false;
+                this.frontier.push(...this.currentWall.getNeighbors(this.grid,2,true));
             }
-            this.frontier.splice(randomIdx,1);
-
+            
             
         }
-      
+        else  this.currentWall = null;
         
+        this.frontier.splice(randomIdx,1);
+
     }
 }
 

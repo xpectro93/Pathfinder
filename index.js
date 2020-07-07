@@ -74,11 +74,11 @@ function change (e) {
     let mouseY = e.offsetY;
 
     drawingGrid.forEach(row => {
-        row.forEach(node => {
+        row.forEach(vertex => {
 
-            if(isDrawing && node.isClicked(mouseX, mouseY) && type.value === "wall") {
-              node.isWall = true;
-              node.draw(ctx,"black")
+            if(isDrawing && vertex.isClicked(mouseX, mouseY) && type.value === "wall") {
+              vertex.isWall = true;
+              vertex.draw(ctx,"black")
             }
         })
 
@@ -93,10 +93,10 @@ function changeMobile (e) {
     let y = e.targetTouches[0].pageY - rect.top;
 
     drawingGrid.forEach(row => {
-        row.forEach(node => {
+        row.forEach(vertex => {
 
-            if(isDrawing && node.isClicked(x, y)) {
-               position[type.value] = changePixelType(ctx,type.value, node)
+            if(isDrawing && vertex.isClicked(x, y)) {
+               position[type.value] = changePixelType(ctx,type.value, vertex)
             }
         })
 
@@ -104,7 +104,7 @@ function changeMobile (e) {
 
 }
 
-function useAStar () {
+function useAStar (speed = 5) {
     if(position.start && position.end) {
         let newSearch = new AStar(position.start, position.end,drawingGrid);
 
@@ -129,11 +129,7 @@ function useAStar () {
             })
             let currentPath = newSearch.constructPath();
             currentPath.forEach(vertex => vertex.draw(ctx,"purple"))
-
-            
-
-
-        },5)
+        },speed)
     }
     
 
@@ -145,17 +141,21 @@ function clicked (e) {
     let mouseY = e.offsetY;
     if(type.value !== "wall"){
         drawingGrid.forEach(row => {
-        row.forEach(node => {
-            if(node.isClicked(mouseX,mouseY)) {
+        row.forEach(vertex => {
+            if(vertex.isClicked(mouseX,mouseY)) {
                 if(position[type.value]) {
-                    let p = position[type.value]
+                    let oldPosition = position[type.value]
                     ctx.strokeStyle = "black"
-                    ctx.strokeRect(p.x * p.size, p.y * p.size,p.size,p.size);
-                    position[type.value].draw(ctx,"white");
+                    ctx.strokeRect
+                    (oldPosition.x * oldPosition.size,
+                     oldPosition.y * oldPosition.size,
+                     oldPosition.size,oldPosition.size);
+
+                    oldPosition.draw(ctx,"white");
                         
                 }
-                position[type.value] = node;
-                changePixelType(ctx,type.value,node)
+                position[type.value] = vertex;
+                changePixelType(ctx,type.value,vertex)
             }     
         }) })
 
@@ -164,6 +164,9 @@ function clicked (e) {
 }
 
 function reset() {
+    //to cancel all setIntervals from previous 
+    let id = window.setInterval(()=>{}, 0);
+    while (id--) window.clearInterval(id);
     type.value = "wall";
     drawingGrid = [];
     position = {};

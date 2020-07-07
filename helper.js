@@ -1,8 +1,7 @@
-import Prim from "./Mazes/Prim.js";
-import Node from '/Node.js';
-export function isValidLocation (mtx, y,x) {
-    return   mtx[y] && mtx[y][x]!== undefined
-}
+import Vertex from '/Vertex.js';
+import { primHelper } from './Helpers/mazeHelper.js'
+
+export const isValidLocation = (mtx, y,x) =>  mtx[y] && mtx[y][x]!== undefined;
 
 export function createBoard (ctx,size,scale,algoType) {
     let newDrawingGrid = [];
@@ -10,30 +9,23 @@ export function createBoard (ctx,size,scale,algoType) {
         let drawingRow = [];
         for (let x = 0; x < scale; x++) {
             
-            let node = new Node(x,y,size);
-            ctx.strokeStyle = "black"
+            let vertex = new Vertex(x,y,size);
+            ctx.strokeStyle = "rgb(24,24,24)"
             ctx.strokeRect(x * size, y * size, size, size);
 
             if(algoType === "prim") {
-                console.log(algoType)
-                node.isWall = true;
-                node.draw(ctx,"black")
+                vertex.isWall = true;
+                vertex.draw(ctx,"rgb(24,24,24)")
             }
             
-            drawingRow.push(node);
+            drawingRow.push(vertex);
 
         }
         newDrawingGrid.push(drawingRow);
     }
-    if(algoType === "prim") {
-        
-        let randomNodeX = Math.floor(Math.random() * newDrawingGrid.length);
-        let randomNodeY = Math.floor(Math.random() * newDrawingGrid.length);
-        let randomNode = newDrawingGrid[randomNodeX][randomNodeY];
-        
-        let newPrim = new Prim(randomNode, newDrawingGrid);
-        newPrim.step(ctx);
-    }
+    
+    if(algoType === "prim")  primHelper(newDrawingGrid,ctx);
+
     return newDrawingGrid;
 }
 
@@ -48,7 +40,7 @@ export function drawInstructions (ctx,w) {
                      "5. Click 'Draw Path'",
                      "6. Enjoy :)"];
     let fontSize = 35;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "rbg(24,24,24)";
     ctx.font = `bold ${fontSize}px  Helvetica Neue`;
     ctx.textAlign = "center";
     let rowSpace = w / instructions.length + 1;

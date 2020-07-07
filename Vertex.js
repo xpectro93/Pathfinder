@@ -1,14 +1,16 @@
 import { isValidLocation } from "./helper.js"
-class Node {
-    // WIDTH and HEIGHT are their pixel dimensions based on grid size;
+class Vertex {
+    //x and y is the Vertext position on the matrix(grid)
+    // size is the width and the height of the vertex
+    //isWall is just a boolean if it is a wall or not
     constructor(x,y,size,isWall = false) {
         this.x = x;
         this.y = y;
         
-        //distance from end node;
+        //distance from end vertex;
         //decided by heuristic function on A* file
         this.h = 0;
-        //distance from starting node;
+        //distance from starting Vertex;
         this.g = 0;
         
         // f = g + h
@@ -40,8 +42,9 @@ class Node {
             let nr = row + this.y;
             let nc = col + this.x;
 
-                //if it is not a wall, then we add this to our valid neighbors array;
-                if(isValidLocation(grid,nr,nc) && (isWall === grid[nr][nc].isWall)) {
+                //if it is or is not a wall, then we add this to our valid neighbors array;
+                if(isValidLocation(grid,nr,nc) && 
+                  (isWall === grid[nr][nc].isWall)) {
 
                     neighbors.push(grid[nr][nc]);
                 }
@@ -57,4 +60,4 @@ class Node {
     }
 
 }
-export default Node;
+export default Vertex;

@@ -9,7 +9,7 @@ class AStar {
         this.closedSet = new Set();
 
         //used to create path;
-        this.lastNode = start;
+        this.lastVertexVisited = start;
     };
     //Manhattan distance 
     getHeuristic(start, end) {
@@ -28,13 +28,13 @@ class AStar {
 
             //TODO:Change this to priority queue/minhheap for O(1) lookup
 
-            //check if a Node in openSet has Lower f than current lowest f
+            //check if a vertex in openSet has Lower f than current lowest f
             if(this.openSet[lowestFIndex].f > this.openSet[i].f) {
                 lowestFIndex = i
             }
 
             //If F values are tied check manhattan distance;-
-            //if distance of end node is shorter. It becomes new lowest F 
+            //if distance of end vertex is shorter. It becomes new lowest F 
             if(this.openSet[lowestFIndex].f === this.openSet[i].f) {
                 if(this.openSet[lowestFIndex].h > this.openSet[i].h) {
                     lowestFIndex = i;
@@ -45,9 +45,9 @@ class AStar {
         }
 
 
-        //change lastNode to be the current node.
+        //change lastVertexVisited to be the current vertex
         let current =  this.openSet[lowestFIndex];
-        this.lastNode = current;
+        this.lastVertexVisited = current;
 
 
         
@@ -60,7 +60,7 @@ class AStar {
         }
 
         //remove from openSet once we have done find
-        this.openSet = this.openSet.filter(node => node !== current);
+        this.openSet = this.openSet.filter(vertex => vertex !== current);
 
         this.closedSet.add(current);
         let currentNeighbors = current.getNeighbors(this.grid,1, false);
@@ -70,7 +70,7 @@ class AStar {
             //if neighbor is part of closed set, then skip 
             if(this.closedSet.has(neighbor)) continue;
 
-            //possible new g value for the neighbor of current Node;
+            //possible new g value for the neighbor of current vertex;
             let tempG = current.g + this.getHeuristic(current, neighbor);
 
             //check if new path to neighbor is shorter OR if neighbor has never been visited.
@@ -95,12 +95,12 @@ class AStar {
 
     constructPath () {
         let tempPath = [];
-        let currentNode = this.lastNode
+        let currentVertex = this.lastVertexVisited
 
         //traverse through "linkedList"
-        while(currentNode) {
-            tempPath.push(currentNode)
-            currentNode = currentNode.previous;
+        while(currentVertex) {
+            tempPath.push(currentVertex)
+            currentVertex = currentVertex.previous;
         }
         return tempPath.reverse();
     }
