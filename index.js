@@ -118,7 +118,7 @@ function clicked (e) {
         row.forEach(vertex => {
             if(vertex.isClicked(mouseX,mouseY)) {
                 if(position[type.value]) {
-                    let oldPosition = position[type.value]
+                    let oldPosition = position[type.value];
                     ctx.strokeStyle = "black"
                     ctx.strokeRect
                     (oldPosition.x * oldPosition.size,
@@ -128,6 +128,7 @@ function clicked (e) {
                     oldPosition.draw(ctx,"white");
                         
                 }
+                vertex.isWall = false;
                 position[type.value] = vertex;
                 changePixelType(ctx,type.value,vertex)
             }     

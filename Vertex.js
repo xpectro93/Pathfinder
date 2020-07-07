@@ -22,12 +22,13 @@ class Vertex {
     }
 
     isClicked (mouseX, mouseY) {
-        let pixelX = this.x * this.size;
-        let pixelY = this.y * this.size;
+        const { size } = this;
+        let pixelX = this.x * size;
+        let pixelY = this.y * size;
 
-       let leftRight = (mouseX > pixelX) && (mouseX < (pixelX + this.size));
+       let leftRight = (mouseX > pixelX) && (mouseX < (pixelX + size));
 
-       let topBottom = (mouseY > pixelY) && (mouseY < (pixelY + this.size));
+       let topBottom = (mouseY > pixelY) && (mouseY < (pixelY + size));
        return topBottom && leftRight;
     }
 
