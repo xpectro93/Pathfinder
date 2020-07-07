@@ -36,7 +36,7 @@ class AStar {
             //If F values are tied check manhattan distance;-
             //if distance of end vertex is shorter. It becomes new lowest F 
             if(this.openSet[lowestFIndex].f === this.openSet[i].f) {
-                if(this.openSet[lowestFIndex].h > this.openSet[i].h) {
+                if(this.openSet[lowestFIndex].h >= this.openSet[i].h) {
                     lowestFIndex = i;
                 }
             }
@@ -53,7 +53,6 @@ class AStar {
         
         //check if we have found our target;
         if(this.target === current) {
-
             console.log('Target has been found');
             //Break out of function once target is found;
             return 1;

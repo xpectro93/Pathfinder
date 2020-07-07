@@ -1,7 +1,6 @@
 
-import AStar from './Pathfinders/AStar.js';
-
-import { drawInstructions, drawNoPath, changePixelType , createBoard } from './helper.js'
+import { useAStar } from './Helpers/pathHelper.js'
+import { drawInstructions, changePixelType , createBoard } from './helper.js'
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -41,6 +40,7 @@ gridSlider.addEventListener('change', e => {
 
 mazeType.addEventListener('change', e => {
     reset();
+    ctx.clearRect(0, 0, minDim, minDim);
     drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value)
 })
 
@@ -65,8 +65,9 @@ resetBtn.addEventListener("click",reset)
 form.addEventListener('submit', e=> {
     e.preventDefault();
 
+    //We can just add a check here to execute different searches
     if(position.start && position.end) {
-        useAStar();
+        useAStar(position.start, position.end, drawingGrid,5,ctx);
     }
 })
 //MOBILE EXPERIENCE
@@ -109,36 +110,6 @@ function changeMobile (e) {
 
 }
 
-function useAStar (speed = 5) {
-    
-        let newSearch = new AStar(position.start, position.end,drawingGrid);
-
-        let search = setInterval(() => {
-            let stepValue = newSearch.step();
-            if(!newSearch.openSet.length) {
-                drawNoPath(ctx, minDim);
-                clearInterval(search);
-            }
-            if(stepValue === 1) {
-                newSearch.showPath(ctx)
-                clearInterval(search);
-
-            }
-            newSearch.openSet.forEach(vertex => {
-                vertex.draw(ctx,"rgb(253,42,135)");
-            })
-
-            newSearch.closedSet.forEach(vertex => {
-                vertex.draw(ctx,"rgba(9,74,103,0.1)");
-            })
-            let currentPath = newSearch.constructPath();
-            currentPath.forEach(vertex => vertex.draw(ctx,"rgb(209,248,234)"))
-        },speed)
-    
-
-}
-
-
 function clicked (e) {
     let mouseX = e.offsetX;
     let mouseY = e.offsetY;
@@ -167,7 +138,7 @@ function clicked (e) {
 }
 
 function reset() {
-    //to cancel all setIntervals from previous 
+    //to cancel all setIntervals from previous drawing
     let id = window.setInterval(()=>{}, 0);
     while (id--) window.clearInterval(id);
     type.value = "wall";

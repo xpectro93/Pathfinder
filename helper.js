@@ -39,7 +39,7 @@ export function drawInstructions (ctx,w) {
                      "4. Pick a target position",
                      "5. Click 'Draw Path'",
                      "6. Enjoy :)"];
-    let fontSize = (w/100) * 6;
+    let fontSize = (w/100) * 5;
     ctx.fillStyle = "rbg(24,24,24)";
     ctx.font = `bold ${fontSize}px  Audiowide`;
     ctx.textAlign = "center";
@@ -52,7 +52,7 @@ export function drawInstructions (ctx,w) {
 
 export function drawNoPath (ctx,size) {
     ctx.fillStyle = "white";
-    ctx.font = `${(size/100) * 6}px Audiowide`;
+    ctx.font = `${(size/100) * 5}px Audiowide`;
     ctx.textAlign = "center";
     ctx.fillText("No Path Available", (size / 2),size/2);
 }
