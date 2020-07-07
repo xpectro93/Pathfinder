@@ -1,4 +1,4 @@
-import Prim from "./Prim.js";
+import Prim from "./Mazes/Prim.js";
 import Node from '/Node.js';
 export function isValidLocation (mtx, y,x) {
     return   mtx[y] && mtx[y][x]!== undefined
@@ -62,7 +62,7 @@ export function drawNoPath (ctx,size) {
     ctx.fillStyle = "white";
     ctx.font = `50px Helvetica Neue`;
     ctx.textAlign = "center";
-    ctx.fillText("No Path Available", (size / 2),size/4);
+    ctx.fillText("No Path Available", (size / 2),size/2);
 }
 
 export function changePixelType (ctx, type, pixel) {

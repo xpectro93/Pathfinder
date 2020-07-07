@@ -1,4 +1,4 @@
-import { isValidLocation } from './helper.js';
+import { isValidLocation } from '../helper.js';
 
 class Prim {
     constructor(randomVertex,grid) {

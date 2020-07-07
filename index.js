@@ -1,5 +1,5 @@
 
-import AStar from './AStar.js';
+import AStar from './Pathfinders/AStar.js';
 
 import { drawInstructions, drawNoPath, changePixelType , createBoard } from './helper.js'
 
@@ -15,7 +15,7 @@ let mazeType = document.getElementById("mazeType");
 //minimum dimension; 
 let minDim = Math.min(window.innerHeight, window.innerWidth)
 
-canvas.width = minDim
+canvas.width = minDim;
 canvas.height = minDim;
 
 let SCALE;
