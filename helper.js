@@ -41,7 +41,7 @@ export function drawInstructions (ctx,w) {
                      "6. Enjoy :)"];
     let fontSize = (w/100) * 6;
     ctx.fillStyle = "rbg(24,24,24)";
-    ctx.font = `bold ${fontSize}px  Helvetica Neue`;
+    ctx.font = `bold ${fontSize}px  Audiowide`;
     ctx.textAlign = "center";
     let rowSpace = w / instructions.length + 1;
     for(let i = 0; i < instructions.length; i++) {
@@ -52,7 +52,7 @@ export function drawInstructions (ctx,w) {
 
 export function drawNoPath (ctx,size) {
     ctx.fillStyle = "white";
-    ctx.font = `${(size/100) * 6}px Helvetica Neue`;
+    ctx.font = `${(size/100) * 6}px Audiowide`;
     ctx.textAlign = "center";
     ctx.fillText("No Path Available", (size / 2),size/2);
 }
