@@ -5,7 +5,6 @@ class Prim {
         // 1. Start with a grid full of walls.
         this.grid = grid;
         this.frontier = [];
-        this.visited = [];
         this.start = randomVertex;
         this.currentWall;
         this.connection;
