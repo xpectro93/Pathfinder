@@ -1,5 +1,4 @@
-console.log('test')
-import { useAStar } from './Helpers/pathHelper.js'
+import { useAStar, useDijkstra } from './Helpers/pathHelper.js'
 import { drawInstructions, changePixelType , createBoard } from './helper.js'
 
 //Grab Canvas from DOM;
@@ -12,6 +11,8 @@ let gridSlider = document.getElementById('gridRange');
 let type = document.getElementById('type');
 let mazeType = document.getElementById("mazeType");
 let resetBtn = document.getElementById("reset");
+let algoType = document.getElementById("algoType");
+
 //minimum dimension; 
 let minDim = Math.min(window.innerHeight, window.innerWidth)
 
@@ -35,15 +36,20 @@ gridSlider.addEventListener('change', e => {
     SCALE = Number(e.target.value);
     SIZE = minDim / SCALE
 
-    drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value) ;  
+    drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value,algoType.value) ;  
 });
 
 mazeType.addEventListener('change', _ => {
     reset();
     ctx.clearRect(0, 0, minDim, minDim);
-    drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value)
+    drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value,algoType.value)
 })
+algoType.addEventListener('change', _ => {
 
+    reset();
+    ctx.clearRect(0, 0, minDim, minDim);
+    drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value,algoType.value)
+})
 
 
 
@@ -67,7 +73,15 @@ form.addEventListener('submit', e=> {
 
     //We can just add a check here to execute different searches
     if(position.start && position.end) {
-        useAStar(position.start, position.end, drawingGrid,ctx);
+
+        if(algoType.value === "aStar") {
+            useAStar(position.start, position.end, drawingGrid,ctx);
+
+        }
+        else if(algoType.value === "dijkstra") {
+
+            useDijkstra(position.start, position.end, drawingGrid,ctx);
+        }
     }
 })
 //MOBILE EXPERIENCE

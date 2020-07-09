@@ -3,7 +3,7 @@ import { primHelper } from './Helpers/mazeHelper.js'
 
 export const isValidLocation = (mtx, y,x) =>  mtx[y] && mtx[y][x]!== undefined;
 
-export function createBoard (ctx,size,scale,algoType) {
+export function createBoard (ctx,size,scale,mazeType,algoType) {
     let newDrawingGrid = [];
     for (let y = 0; y < scale; y++) {
         let drawingRow = [];
@@ -13,11 +13,13 @@ export function createBoard (ctx,size,scale,algoType) {
             ctx.strokeStyle = "rgb(24,24,24)"
             ctx.strokeRect(x * size, y * size, size, size);
 
-            if(algoType === "prim") {
+            if(mazeType === "prim") {
                 vertex.isWall = true;
                 vertex.draw(ctx,"rgb(24,24,24)")
             }
-            else if (algoType === "dijkstra") {
+            
+            
+            if (algoType === "dijkstra") {
                 vertex.f = Infinity;
             }
                 
@@ -29,7 +31,7 @@ export function createBoard (ctx,size,scale,algoType) {
         newDrawingGrid.push(drawingRow);
     }
 
-    if(algoType === "prim")  primHelper(newDrawingGrid,ctx);
+    if(mazeType === "prim")  primHelper(newDrawingGrid,ctx);
 
     return newDrawingGrid;
 }

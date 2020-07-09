@@ -19,8 +19,8 @@ class Dijkstra {
         
         //pick vertex with smallest distance 
         let lowestDistanceIndex = 0;
-        for ( let i = 0; this.frontier.length; i++) {
-            if (this.frontier[lowestDistanceIndex].f > this.openSet[i].f) {
+        for ( let i = 0;i < this.frontier.length; i++) {
+            if (this.frontier[lowestDistanceIndex].f > this.frontier[i].f) {
                 lowestDistanceIndex = i;
             }
         }
@@ -28,20 +28,46 @@ class Dijkstra {
 
         let current = this.frontier[lowestDistanceIndex];
         
-        this.frontier = this.frontier.filter(vertex !== current);
-
-        if(current === this.target) {
-            console.log('Target has been found0');
-        }
         
+        
+        
+        if(current === this.target) {
+            console.log('Target has been found');
+            return current;
+        }
+        this.frontier = this.frontier.filter(vertex=> vertex !== current);
+        this.visited.add(current);
 
-        //for each neighbor of the one that got removed;
+        let currentNeighbors = current.getNeighbors(this.grid, 1, false);
+
+         //for each neighbor of the one that got removed;
         //tempDistance = distance of removed + distance(removed+ neighbor)
+        for(let neighbor of currentNeighbors) { 
 
-        //if(tempDistnace < distance of neighbor)
-            //then update distance of neight to tempDistance
-            // neighbor/prev to removed
+            if(this.visited.has(neighbor)) continue;
 
+            let tempDistance = current.f + this.getHeuristic(current, neighbor);
+            
+            if(tempDistance < neighbor.f || !this.frontier.includes(neighbor)) {
+                neighbor.f = tempDistance;
+                neighbor.previous = current;
+            };
+            if(!this.frontier.includes(neighbor)) this.frontier.push(neighbor);
+
+        }
+
+
+    }
+    constructPath (last) {
+        let tempPath = [];
+        let currentVertex = last
+
+        //traverse through "linkedList"
+        while(currentVertex) {
+            tempPath.push(currentVertex)
+            currentVertex = currentVertex.previous;
+        }
+        return tempPath.reverse();
     }
 
 

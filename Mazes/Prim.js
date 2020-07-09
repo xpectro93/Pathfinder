@@ -61,6 +61,7 @@ class Prim {
         this.frontier.splice(randomIdx,1);
 
     }
+    
 }
 
 
