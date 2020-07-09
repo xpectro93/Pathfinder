@@ -17,6 +17,11 @@ export function createBoard (ctx,size,scale,algoType) {
                 vertex.isWall = true;
                 vertex.draw(ctx,"rgb(24,24,24)")
             }
+            else if (algoType === "dijkstra") {
+                vertex.f = Infinity;
+            }
+                
+            
             
             drawingRow.push(vertex);
 
