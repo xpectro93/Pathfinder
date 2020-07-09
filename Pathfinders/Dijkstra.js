@@ -4,8 +4,9 @@ class Dijkstra {
         this.target = target;
         this.grid = grid;
 
-        this.frontier = [start];
-        this.visited = new Set();
+        this.openSet = [start];
+        this.closedSet = new Set();
+        this.start.f = 0;
     };
     getHeuristic(start, end) {
         let newX = Math.abs(start.x - end.x);
@@ -19,24 +20,24 @@ class Dijkstra {
         
         //pick vertex with smallest distance 
         let lowestDistanceIndex = 0;
-        for ( let i = 0;i < this.frontier.length; i++) {
-            if (this.frontier[lowestDistanceIndex].f > this.frontier[i].f) {
+        for ( let i = 0;i < this.openSet.length; i++) {
+            if (this.openSet[lowestDistanceIndex].f > this.openSet[i].f) {
                 lowestDistanceIndex = i;
             }
         }
-        //remove from frontier
+        //remove from openSet
 
-        let current = this.frontier[lowestDistanceIndex];
-        
+        let current = this.openSet[lowestDistanceIndex];
+        this.lastVertexVisited = current;
         
         
         
         if(current === this.target) {
             console.log('Target has been found');
-            return current;
+            return 1;
         }
-        this.frontier = this.frontier.filter(vertex=> vertex !== current);
-        this.visited.add(current);
+        this.openSet = this.openSet.filter(vertex=> vertex !== current);
+        this.closedSet.add(current);
 
         let currentNeighbors = current.getNeighbors(this.grid, 1, false);
 
@@ -44,23 +45,25 @@ class Dijkstra {
         //tempDistance = distance of removed + distance(removed+ neighbor)
         for(let neighbor of currentNeighbors) { 
 
-            if(this.visited.has(neighbor)) continue;
+            if(this.closedSet.has(neighbor)) continue;
 
             let tempDistance = current.f + this.getHeuristic(current, neighbor);
             
-            if(tempDistance < neighbor.f || !this.frontier.includes(neighbor)) {
+            if(tempDistance < neighbor.f || !this.openSet.includes(neighbor)) {
                 neighbor.f = tempDistance;
                 neighbor.previous = current;
             };
-            if(!this.frontier.includes(neighbor)) this.frontier.push(neighbor);
+            if(!this.openSet.includes(neighbor)) this.openSet.push(neighbor);
 
         }
 
+        return current
+
 
     }
-    constructPath (last) {
+    constructPath () {
         let tempPath = [];
-        let currentVertex = last
+        let currentVertex = this.lastVertexVisited
 
         //traverse through "linkedList"
         while(currentVertex) {

@@ -1,6 +1,7 @@
-import { useAStar, useDijkstra } from './Helpers/pathHelper.js'
+import {usePathfinder } from './Helpers/pathHelper.js'
 import { drawInstructions, changePixelType , createBoard } from './helper.js'
-
+import Dijkstra from './Pathfinders/Dijkstra.js';
+import AStar from './Pathfinders/AStar.js';
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
 let ctx = canvas.getContext('2d');
@@ -75,12 +76,12 @@ form.addEventListener('submit', e=> {
     if(position.start && position.end) {
 
         if(algoType.value === "aStar") {
-            useAStar(position.start, position.end, drawingGrid,ctx);
+            usePathfinder(AStar,position.start, position.end, drawingGrid,ctx);
 
         }
         else if(algoType.value === "dijkstra") {
 
-            useDijkstra(position.start, position.end, drawingGrid,ctx);
+            usePathfinder(Dijkstra,position.start, position.end, drawingGrid,ctx);
         }
     }
 })
