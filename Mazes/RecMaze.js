@@ -1,6 +1,7 @@
 class RecMaze {
     constructor(grid) {
-        this.grid = grid;
+				this.grid = grid;
+				this.step = this.step.bind(this);
     }
     avg(min,max) {
       return Math.floor((min + max) / 2);
@@ -9,15 +10,16 @@ class RecMaze {
       return Math.floor(Math.random() * (max - min) + min);
     }
     step(minX,maxX,minY,maxY) {
+			console.log('loop')
 			const { grid, step } = this;
 
 			let lengthX =  maxX - minX;
 			let lengthY = maxY - minY;
 			
-			if(lengthX < 3 || lengthY < 3) return;
+			if(lengthX < 4 || lengthY < 4) return;
 
-			let midX = avg(minX, maxX);
-			let midY = avg(minY, minY);
+			let midX = this.avg(minX, maxX);
+			let midY = this.avg(minY, maxY);
 
 			
 			for(let y = minY; y < maxY; y++) {

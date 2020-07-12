@@ -1,5 +1,6 @@
 import Vertex from './Vertex.js';
-import { primHelper } from './Helpers/mazeHelper.js'
+import { primHelper, recHelper } from './Helpers/mazeHelper.js'
+
 
 export const isValidLocation = (mtx, y,x) =>  mtx[y] && mtx[y][x]!== undefined;
 
@@ -32,6 +33,7 @@ export function createBoard (ctx,size,scale,mazeType,algoType) {
     }
 
     if(mazeType === "prim")  primHelper(newDrawingGrid,ctx);
+    if(mazeType === "recMaze") recHelper(newDrawingGrid,ctx);
 
     return newDrawingGrid;
 }

@@ -1,5 +1,5 @@
 import Prim from "../Mazes/Prim.js";
-
+import RecMaze from "../Mazes/RecMaze.js";
 
 export function primHelper (matrix,ctx) {
     if(!matrix.length) return;
@@ -22,4 +22,16 @@ export function primHelper (matrix,ctx) {
         prim.currentWall ? prim.currentWall.draw(ctx,"white"):null;
         prim.connection.draw(ctx,"white");
     },1)
+}
+
+export function recHelper ( matrix, ctx) {
+    if(!matrix.length) return;
+
+    let rec = new RecMaze(matrix);
+    rec.step(0,matrix.length,0,matrix.length);
+    rec.grid.forEach(row => {
+        row.forEach(v => {
+            if(v.isWall) v.draw(ctx,"cyan")
+        })
+    })
 }
