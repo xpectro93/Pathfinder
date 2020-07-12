@@ -5,8 +5,13 @@ class RecMaze {
     randomNumber(min,max) {
         return Math.floor(Math.random() * (max - min) + min);
     }
-    step() {
-        if(maxX - maxY < 3 || maxY - minY < 3) return;
+    step(minX,maxX,minY,maxY) {
+
+        for(let i = minY; i < maxY;i++) {
+            for(let j = minX; j < maxX; j++) {
+              mtx[i][j] = 1
+            }
+        }
     }
 }
 export default RecMaze;
