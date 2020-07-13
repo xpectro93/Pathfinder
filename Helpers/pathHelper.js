@@ -18,7 +18,6 @@ function finalPath (ctx,newSearch) {
 /* DIJKSTRA */
 export  function usePathfinder (Callback,start, target, grid,ctx, speed = 5) {
     let newSearch = new Callback(start, target,grid);
-    console.log("newSearch", newSearch.start)
         let search = setInterval(() => {
             let stepValue = newSearch.step();
  

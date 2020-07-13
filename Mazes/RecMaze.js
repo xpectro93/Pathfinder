@@ -7,39 +7,91 @@ class RecMaze {
       return Math.floor((min + max) / 2);
     }
     randomNumber(min,max) {
-      return Math.floor(Math.random() * (max - min) + min);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    step(minX,maxX,minY,maxY) {
-			console.log('loop')
-			const { grid, step } = this;
 
-			let lengthX =  maxX - minX;
-			let lengthY = maxY - minY;
-			
-			if(lengthX < 4 || lengthY < 4) return;
+    step(x1,x2,y1,y2) {
+			const { step } = this;
+      let width = x2 - x1;
+      let height = y2 - y1;
+      
 
-			let midX = this.avg(minX, maxX);
-			let midY = this.avg(minY, maxY);
+      if(width <= 3 || height <= 3) return;
+      if (width >= height){
+        let mid = this.avg(x1,x2);
 
-			
-			for(let y = minY; y < maxY; y++) {
-				for(let x = minX; x < maxX; x++) {
-					if(midX === x) grid[y][x].isWall = true;
-					else if(midY === y) grid[y][x].isWall = true;
-				}
-			}
+        this.verticalStep(mid,y1,y2);
+        step(x1, mid,y1, y2);
+        step(mid, x2,y1, y2);
+      }
+      else{
 
-			let randX = this.randomNumber(minX,minY);
-			let randY = this.randomNumber(minY,maxY);
-			grid[randY][midX].isWall = false;
-			grid[midY][randX].isWall = false;
+        let mid = this.avg(y1,y2);
+        this.horizontalStep(mid, x1,x2);
 
-			step(minX,midX,minY,midY);
-			step(midX,maxX,minY,midY);
-			step(minX, midX, midY,maxY);
-			step(midX,maxX, midY,maxY);
-			
+        step(x1, x2,y1, mid);
+        step(x1, x2,mid, y2);
 
     }
+    }
+    horizontalStep(mid,x1,x2) {
+      const { grid } = this;
+      let max = x2-1;
+      let min = x1+1;
+      let first  = false;
+      let second = false;
+      let rand = this.randomNumber(min,max)
+      if (!grid[mid][x2].isWall){
+        rand = max;
+        first = true;
+      }
+      if (!grid[mid][x1].isWall){
+        rand = min;
+        second = true;
+      }
+      for (let i = x1+1; i < x2; i++){
+        if (first && second){
+          if (i == max || i == min){
+            continue;
+          }
+        }
+        else if (i == rand){
+          continue;
+        }
+        grid[mid][i].isWall = true;
+      } 
+    }
+
+    verticalStep(mid,y1,y2) {
+      const { grid } = this;
+      let first  = false;
+      let second = false;
+      let max = y2 - 1;
+      let min = y1 + 1;
+      let rand = this.randomNumber(min, max);
+
+      if (!grid[y2][mid].isWall){
+        rand = max;
+        first = true;
+      }
+      if (!grid[y1][mid].isWall){
+        rand = min;
+        second = true;
+      }
+      for (let i = y1 + 1; i < y2; i++){
+        if (first && second){
+          if (i == max || i == min){
+            continue;
+          }
+        }
+        else if (i == rand){
+          continue;
+        }
+        grid[i][mid].isWall  = true;
+      }
+    }
+
+    
 }
 export default RecMaze;
+

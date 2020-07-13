@@ -18,6 +18,14 @@ export function createBoard (ctx,size,scale,mazeType,algoType) {
                 vertex.isWall = true;
                 vertex.draw(ctx,"rgb(24,24,24)")
             }
+            if(mazeType === "recMaze") {
+            
+                if(y === 0 || y === (scale - 1) ||
+                   x === 0 || x === (scale - 1)){
+                      vertex.isWall = true; 
+                      vertex.draw(ctx,"rgb(24,24,24)")
+                   }
+            }
             
             
             if (algoType === "dijkstra") {

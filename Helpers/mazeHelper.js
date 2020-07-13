@@ -28,10 +28,10 @@ export function recHelper ( matrix, ctx) {
     if(!matrix.length) return;
 
     let rec = new RecMaze(matrix);
-    rec.step(0,matrix.length,0,matrix.length);
+    rec.step(0,matrix.length - 1,0,matrix.length - 1);
     rec.grid.forEach(row => {
         row.forEach(v => {
-            if(v.isWall) v.draw(ctx,"cyan")
+            if(v.isWall) v.draw(ctx,"rgb(24,24,24")
         })
     })
 }
