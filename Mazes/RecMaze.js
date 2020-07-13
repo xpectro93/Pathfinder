@@ -20,75 +20,63 @@ class RecMaze {
       if (width >= height){
         let mid = this.avg(x1,x2);
 
-        this.verticalStep(mid,y1,y2);
+        this.uniStep(mid,y1,y2,1)
         step(x1, mid,y1, y2);
         step(mid, x2,y1, y2);
       }
       else{
 
         let mid = this.avg(y1,y2);
-        this.horizontalStep(mid, x1,x2);
-
+        
+        this.uniStep(mid,x1,x2)
         step(x1, x2,y1, mid);
         step(x1, x2,mid, y2);
 
     }
     }
-    horizontalStep(mid,x1,x2) {
-      const { grid } = this;
-      let max = x2-1;
-      let min = x1+1;
-      let first  = false;
-      let second = false;
-      let rand = this.randomNumber(min,max)
-      if (!grid[mid][x2].isWall){
-        rand = max;
-        first = true;
-      }
-      if (!grid[mid][x1].isWall){
-        rand = min;
-        second = true;
-      }
-      for (let i = x1+1; i < x2; i++){
-        if (first && second){
-          if (i == max || i == min){
-            continue;
-          }
-        }
-        else if (i == rand){
-          continue;
-        }
-        grid[mid][i].isWall = true;
-      } 
-    }
 
-    verticalStep(mid,y1,y2) {
+    //1 is vertical else is horizontal
+    uniStep (mid, z1,z2, dir) {
       const { grid } = this;
-      let first  = false;
-      let second = false;
-      let max = y2 - 1;
-      let min = y1 + 1;
-      let rand = this.randomNumber(min, max);
+      let checkOne = false;
+      let checkTwo = false;
+      let max = z2 - 1;
+      let min =  z1 + 1;
+      
+      let rand = this.randomNumber(min,max);
 
-      if (!grid[y2][mid].isWall){
-        rand = max;
-        first = true;
-      }
-      if (!grid[y1][mid].isWall){
-        rand = min;
-        second = true;
-      }
-      for (let i = y1 + 1; i < y2; i++){
-        if (first && second){
-          if (i == max || i == min){
-            continue;
-          }
+      if(dir === 1) {
+        if (!grid[z2][mid].isWall){
+          rand = max;
+          checkOne = true;
         }
-        else if (i == rand){
-          continue;
+        if (!grid[z1][mid].isWall){
+          rand = min;
+          checkTwo = true;
         }
-        grid[i][mid].isWall  = true;
+        
       }
+      else {
+        if (!grid[mid][z2].isWall){
+          rand = max;
+          checkOne = true;
+        }
+        if (!grid[mid][z1].isWall){
+          rand = min;
+          checkTwo = true;
+        }
+
+      }
+      for (let i = z1 + 1; i < z2; i++){
+        if (checkOne && checkTwo){
+          if (i == max || i == min) continue;
+        }
+        else if (i == rand) continue;
+
+        if(dir === 1) grid[i][mid].isWall = true;
+        else          grid[mid][i].isWall = true;
+      }
+
     }
 
     
