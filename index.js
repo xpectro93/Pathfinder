@@ -21,7 +21,7 @@ canvas.width = minDim;
 canvas.height = minDim;
 
 let SCALE = Number(gridSlider.value)
-let SIZE;
+let SIZE = minDim / Number(gridSlider.value)
 drawInstructions(ctx,minDim)
 
 //start and endposition
@@ -47,9 +47,20 @@ mazeType.addEventListener('change', _ => {
 })
 algoType.addEventListener('change', _ => {
 
-    reset();
+    // reset();
     ctx.clearRect(0, 0, minDim, minDim);
-    drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value,algoType.value)
+    drawingGrid.forEach(row => {
+        row.forEach(v => {
+            if(!v.isWall) v.drawLine(ctx,'rbg(24,24,24')
+            else v.draw(ctx,'rgb(24,24,24)')
+        })
+    })
+    if(position.start && position.end) {
+        position.start.draw(ctx,"blue")
+        position.end.draw(ctx,"red");
+    }
+    
+    // drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value,algoType.value)
 })
 
 
@@ -150,8 +161,8 @@ function reset() {
     let id = window.setInterval(()=>{}, 0);
     while (id--) window.clearInterval(id);
     type.value = "wall";
-    drawingGrid = [];
+    drawingGrid = []
     position = {};
     ctx.clearRect(0, 0, minDim, minDim);
-    drawInstructions(ctx,minDim)
+    drawInstructions(ctx, minDim) 
 }

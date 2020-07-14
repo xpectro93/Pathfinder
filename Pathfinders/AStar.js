@@ -1,24 +1,10 @@
-class AStar {
+import Grid  from '../Grid.js';
+class AStar extends Grid{
     constructor(start, target,grid) {
-        this.start = start;
-        this.target = target;
-        this.grid = grid;
+        super(start,target,grid);
 
-        this.openSet = [start];
-        //O(1);
-        this.closedSet = new Set();
-
-        //used to create path;
         this.lastVertexVisited = start;
     };
-    //Manhattan distance 
-    getHeuristic(start, end) {
-        let newX = Math.abs(start.x - end.x);
-        let newY = Math.abs(start.y - end.y);
-
-        return newX + newY;
-    }
-
     step () {
 
 
@@ -91,19 +77,6 @@ class AStar {
 
 
     }
-
-    constructPath () {
-        let tempPath = [];
-        let currentVertex = this.lastVertexVisited
-
-        //traverse through "linkedList"
-        while(currentVertex) {
-            tempPath.push(currentVertex)
-            currentVertex = currentVertex.previous;
-        }
-        return tempPath.reverse();
-    }
-   
 }
 export default AStar;
 

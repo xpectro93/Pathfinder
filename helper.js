@@ -11,9 +11,7 @@ export function createBoard (ctx,size,scale,mazeType,algoType) {
         for (let x = 0; x < scale; x++) {
             
             let vertex = new Vertex(x,y,size);
-            ctx.strokeStyle = "rgb(24,24,24)"
-            ctx.strokeRect(x * size, y * size, size, size);
-
+                vertex.drawLine(ctx, "rgb(24,24,24)");
             if(mazeType === "prim") {
                 vertex.isWall = true;
                 vertex.draw(ctx,"rgb(24,24,24)")
@@ -55,9 +53,12 @@ export function drawInstructions (ctx,w) {
                      "3. Pick a starting position",
                      "4. Pick a target position",
                      "5. Click 'Draw Path'",
-                     "6. Enjoy :)"];
-    let fontSize = (w/100) * 5;
-    ctx.fillStyle = "rbg(24,24,24)";
+                     "6. Enjoy :)",
+                      "Tip:", "After completing a search",
+                      "switch to a different search type ",
+                      "to see how they differ"];
+    let fontSize = (w/100) * 4.5;
+    ctx.fillStyle = "rgb(24,24,24)";
     ctx.font = `bold ${fontSize}px  Audiowide`;
     ctx.textAlign = "center";
     let rowSpace = w / instructions.length + 1;
@@ -82,7 +83,6 @@ export function changePixelType (ctx, type, pixel) {
     else if(type === "end") {
         pixel.draw(ctx,"red");
     }
-    return pixel
 }
 
 

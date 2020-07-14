@@ -4,12 +4,14 @@ function finalPath (ctx,newSearch) {
     let path = newSearch.constructPath();
     let i = 0;
     let shortestPath = setInterval(() => {
-        if(i === path.length - 1) {
-            
+        if(i === path.length - 1) { 
             clearInterval(shortestPath)
         }
+            
         
         path[i].draw(ctx,"rgb(0, 253, 190)");
+        newSearch.start.draw(ctx,"blue");
+        newSearch.target.draw(ctx,"red");
         i++
         
     }, 5);

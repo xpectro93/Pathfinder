@@ -59,6 +59,11 @@ class Vertex {
         ctx.fillRect(x * size, y * size, size, size);
         
     }
+    drawLine(ctx,color) {
+        const { size, x, y } = this;
+        ctx.strokeStyle = color;
+        ctx.strokeRect(x * size, y * size, size, size);
+    }
 
 }
 export default Vertex;

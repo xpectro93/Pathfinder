@@ -1,23 +1,11 @@
-class Dijkstra {
+import  Grid  from '../Grid.js';
+class Dijkstra extends Grid{
     constructor(start, target, grid) {
-        this.start = start;
-        this.target = target;
-        this.grid = grid;
+        super(start, target, grid);
 
-        this.openSet = [start];
-        this.closedSet = new Set();
         this.start.f = 0;
     };
-    getHeuristic(start, end) {
-        let newX = Math.abs(start.x - end.x);
-        let newY = Math.abs(start.y - end.y);
-
-        return newX + newY;
-    }
-
-    step () {
-        //change start distance to to 0 before loop starts;
-        
+    step () {        
         //pick vertex with smallest distance 
         let lowestDistanceIndex = 0;
         for ( let i = 0;i < this.openSet.length; i++) {
@@ -61,18 +49,5 @@ class Dijkstra {
 
 
     }
-    constructPath () {
-        let tempPath = [];
-        let currentVertex = this.lastVertexVisited
-
-        //traverse through "linkedList"
-        while(currentVertex) {
-            tempPath.push(currentVertex)
-            currentVertex = currentVertex.previous;
-        }
-        return tempPath.reverse();
-    }
-
-
 }
 export default Dijkstra;
