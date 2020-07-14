@@ -18,6 +18,7 @@ h1 {
 }
 select {
     border-radius: 5px;
+    text-align-last:center;
 }
 /* this is the canvas */
 #root {

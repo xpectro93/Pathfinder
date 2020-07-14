@@ -15,19 +15,17 @@
 
         <form id="gridForm">
             <h1>Pathfinder</h1>
+            Grid Size
+            <input id="gridRange" type="range" min="20" step="5" max="100"/>
+            <select name="maze" id="mazeType">
+                <option value="draw">Draw my own maze </option>
+                <option value="prim">Draw Prims maze</option>
+                <option value="recMaze">Draw Recursive Division maze</option>
+            </select>
             Search Type:
             <select id="algoType">
                 <option value="aStar">A* Algorithm</option>
                 <option value="dijkstra">Dijkstra's Algorithm</option>
-            </select>
-
-            Grid Size
-            <input id="gridRange" type="range" min="20" step="5" max="100"/>
-
-            <select name="maze" id="mazeType">
-                <option value="draw">Draw my own maze </option>
-                <option value="prim">Draw Prims maze</option>
-                <option value="recMaze">Draw Recursive maze</option>
             </select>
             Pick pixel type (walls, start, end)
             <select name="type" id="type">
