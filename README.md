@@ -13,4 +13,12 @@ I could either make them move randomly, OR I could find out how I could replicat
 After taking looking it, I came accross different search algorithms such as Dijkstra's and A*, I quickly became fascinated by them.
 As a software developer, I thrive on the opportunity to learn something new and to solve problems , so I went forth and created this project to show how amazing algorithms can be.
 ## Screenshots
-###Recursive Division Maze / Prim's maze algorithm / Your own maze 
+![alt text](https://github.com/xpectro93/Pathfinder/blob/master/algo.gif "A* algorith solving recursive division maze")
+### Recursive Division Maze / Prim's maze algorithm / Your own maze 
+![alt text](https://github.com/xpectro93/Pathfinder/blob/master/allMazes.png "Sample of mazes types")
+### Mobile experience 
+![alt text](https://github.com/xpectro93/Pathfinder/blob/master/mobile.png "Sample of website in mobile")
+## Tools
+JavaScript and Canvas
+
+
