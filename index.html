@@ -16,20 +16,12 @@
     
 
     <form id="gridForm">
-        <h1>Pathfinder</h1>
+        <h3>Pathfinder</h3>
          <!-- Modal Trigger -->
-  <a class="waves-effect waves-light btn-small modal-trigger" href="#modal1">Pick Grid Size</a>
-        <select name="maze" id="mazeType">
-            
-            <option value="draw">Draw my own maze </option>
-            <option value="prim">Draw Prims maze</option>
-            <option value="recMaze">Draw Recursive Division maze</option>
-        </select>
-        Pick Search Type:
-        <select id="algoType">
-            <option value="dijkstra">Dijkstra's Algorithm</option>
-            <option value="aStar">A* Algorithm</option>
-        </select>
+  <a class="waves-effect waves-light btn-small modal-trigger" href="#modal-size">Pick Grid Size</a>
+  <a class="waves-effect waves-light btn-small modal-trigger" href="#modal-type">Pick Maze Type</a>
+  <a class="waves-effect waves-light btn-small modal-trigger" href="#modal-search">Pick Search Type</a>
+        
         <select name="type" id="type">
             <option value="wall"> wall </option>
             <option value="start">Start</option>
@@ -43,7 +35,7 @@
       
 
   <!-- Grid size Modal -->
-  <div id="modal1" class="modal">
+  <div id="modal-size" class="modal">
     <div class="modal-content">
       <h4>Use slider to pick size</h4>
       <input id="gridRange" type="range" min="20" step="5" max="100"/>
@@ -52,16 +44,37 @@
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
     </div>
   </div>
+
   <!-- Maze Type Modal -->
-  <div id="modal1" class="modal">
+  <div id="modal-type" class="modal">
     <div class="modal-content">
-      <h4>Use slider to pick size</h4>
-      <input id="gridRange" type="range" min="20" step="5" max="100"/>
+      <h4>Pick Maze Type</h4>
+      <select name="maze" id="mazeType">
+        <option value="draw">Draw my own maze </option>
+        <option value="prim">Draw Prims maze</option>
+        <option value="recMaze">Draw Recursive Division maze</option>
+      </select>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
     </div>
   </div>
+
+  <!-- Search Modal -->
+  <div id="modal-search" class="modal">
+    <div class="modal-content">
+      <h4>Pick Search Type</h4>
+      <select id="algoType">
+        <option value="dijkstra">Dijkstra's Algorithm</option>
+        <option value="aStar">A* Algorithm</option>
+    </select>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+
+
     <canvas id='root'></canvas>
 </body>
 </html>
