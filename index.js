@@ -14,6 +14,12 @@ let mazeType = document.getElementById("mazeType");
 let resetBtn = document.getElementById("reset");
 let algoType = document.getElementById("algoType");
 
+//MODAL
+let modal =  document.querySelectorAll('.modal');
+M.Modal.init(modal);
+let selects = document.querySelectorAll('select');
+M.FormSelect.init(selects);
+
 //minimum dimension; 
 let minDim = Math.min(window.innerHeight, window.innerWidth)
 

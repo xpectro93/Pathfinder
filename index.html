@@ -6,37 +6,62 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="/Pathfinder/favicon.ico" type="image/x-icon"/>
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
-    <!-- <script src="/index.js" type="module"></script> -->
-    <script src="/Pathfinder/index.js" type="module"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/index.js" type="module"></script>
+    <!-- <script src="/Pathfinder/index.js" type="module"></script> -->
     <title>Pathfinder</title>
 </head>
 <body>
     
 
-        <form id="gridForm">
-            <h1>Pathfinder</h1>
-            Grid Size
-            <input id="gridRange" type="range" min="20" step="5" max="100"/>
-            <select name="maze" id="mazeType">
-                <option value="draw">Draw my own maze </option>
-                <option value="prim">Draw Prims maze</option>
-                <option value="recMaze">Draw Recursive Division maze</option>
-            </select>
-            Search Type:
-            <select id="algoType">
-                <option value="aStar">A* Algorithm</option>
-                <option value="dijkstra">Dijkstra's Algorithm</option>
-            </select>
-            Pick pixel type (walls, start, end)
-            <select name="type" id="type">
-                <option value="wall"> wall </option>
-                <option value="start">Start</option>
-                <option value="end">End</option>
-            </select>
-            <input id="submit" type="submit" value="Draw Path">
-            <button id="reset">Clear All</button>
-        </form>
+    <form id="gridForm">
+        <h1>Pathfinder</h1>
+         <!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn-small modal-trigger" href="#modal1">Pick Grid Size</a>
+        <select name="maze" id="mazeType">
+            
+            <option value="draw">Draw my own maze </option>
+            <option value="prim">Draw Prims maze</option>
+            <option value="recMaze">Draw Recursive Division maze</option>
+        </select>
+        Pick Search Type:
+        <select id="algoType">
+            <option value="dijkstra">Dijkstra's Algorithm</option>
+            <option value="aStar">A* Algorithm</option>
+        </select>
+        <select name="type" id="type">
+            <option value="wall"> wall </option>
+            <option value="start">Start</option>
+            <option value="end">End</option>
+        </select>
+        <input id="submit" type="submit" value="Draw Path">
+        <button id="reset">Clear All</button>
+    </form>
                  
+
+      
+
+  <!-- Grid size Modal -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Use slider to pick size</h4>
+      <input id="gridRange" type="range" min="20" step="5" max="100"/>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <!-- Maze Type Modal -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Use slider to pick size</h4>
+      <input id="gridRange" type="range" min="20" step="5" max="100"/>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
     <canvas id='root'></canvas>
 </body>
 </html>
