@@ -14,7 +14,7 @@ let mazeType = document.getElementById("mazeType");
 let resetBtn = document.getElementById("reset");
 let algoType = document.getElementById("algoType");
 
-//MODAL
+//Materialize 
 let modal =  document.querySelectorAll('.modal');
 M.Modal.init(modal);
 let selects = document.querySelectorAll('select');
@@ -65,8 +65,6 @@ algoType.addEventListener('change', _ => {
         position.start.draw(ctx,"blue")
         position.end.draw(ctx,"red");
     }
-    
-    // drawingGrid = createBoard(ctx, SIZE, SCALE,mazeType.value,algoType.value)
 })
 
 

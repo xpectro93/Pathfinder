@@ -40,3 +40,6 @@ form {
     border:1px rgb(0, 253, 190) solid
 }
 
+#submit, #reset {
+    margin:2px;
+}
