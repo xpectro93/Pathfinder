@@ -32,7 +32,8 @@
         </select>
         <!-- <input id="submit" type="submit" value="Draw Path"> -->
         <button class="waves-effect waves-light btn-small" id="submit" type="submit">Draw Path</button>
-        <button class="waves-effect waves-light btn-small" id="reset">Clear All</button>
+        <button class="waves-effect waves-light btn-small red accent-3" id="reset">Clear All</button>
+        <a href="https://github.com/xpectro93/Pathfinder" target="_blank">GitHub</a>
     </form>
                  
 
@@ -42,7 +43,10 @@
   <div id="modal-size" class="modal">
     <div class="modal-content">
       <h4>Use slider to pick size</h4>
-      <input id="gridRange" type="range" min="20" step="5" max="100"/>
+      <p>
+        Move the slider to pick the amount of squares the maze will have
+      </p>
+        <input id="gridRange" type="range" min="20" step="5" max="100"/>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-red btn-flat">Close</a>
@@ -53,6 +57,11 @@
   <div id="modal-type" class="modal">
     <div class="modal-content">
       <h4>Pick Maze Type</h4>
+      <p>
+        Here you can pick which algorithm to use to create the maze
+      </br>
+      <b>Recursive division</b> This does that and the other
+      </p>
       <select name="maze" id="mazeType">
         <option value="draw">Draw my own maze </option>
         <option value="prim">Draw Prims maze</option>
