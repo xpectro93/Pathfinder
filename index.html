@@ -24,7 +24,7 @@
   <a class="waves-effect waves-light btn-small modal-trigger" href="#modal-type">Pick Maze Type</a>
   STEP 3
   <a class="waves-effect waves-light btn-small modal-trigger" href="#modal-search">Pick Search Type</a>
-  STEP 4 </br>Pick start and end points
+  <span>STEP 4</span><span>Pick start and end points</span>
         <select name="type" id="type">
             <option value="start">Start Point</option>
             <option value="end">End Point</option>
@@ -44,7 +44,7 @@
     <div class="modal-content">
       <h4>Use slider to pick size</h4>
       <p>
-        Move the slider to pick the amount of squares the maze will have
+        Move the slider to pick the size of the maze.
       </p>
         <input id="gridRange" type="range" min="20" step="5" max="100"/>
     </div>
@@ -58,9 +58,7 @@
     <div class="modal-content">
       <h4>Pick Maze Type</h4>
       <p>
-        Here you can pick which algorithm to use to create the maze
-      </br>
-      <b>Recursive division</b> This does that and the other
+        Here you can pick which algorithm to use to create the maze      
       </p>
       <select name="maze" id="mazeType">
         <option value="draw">Draw my own maze </option>
@@ -77,10 +75,16 @@
   <div id="modal-search" class="modal">
     <div class="modal-content">
       <h4>Pick Search Type</h4>
+      <p>
+        Pick the algorithm that is going to solve the maze
+      </p>
       <select id="algoType">
         <option value="dijkstra">Dijkstra's Algorithm</option>
         <option value="aStar">A* Algorithm</option>
     </select>
+    <p>
+      <b>TIP :</b> After seeing how the algorithm solved the maze, pick a different one to see how they differ.
+    </p>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
