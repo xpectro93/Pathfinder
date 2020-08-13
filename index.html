@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="/index.js" type="module"></script>
-    <!-- <script src="/Pathfinder/index.js" type="module"></script> -->
+    <!-- <script src="/index.js" type="module"></script> -->
+    <script src="/Pathfinder/index.js" type="module"></script>
     <title>Pathfinder</title>
 </head>
 <body>
@@ -25,11 +25,14 @@
   STEP 3
   <a class="waves-effect waves-light btn-small modal-trigger" href="#modal-search">Pick Search Type</a>
   <span>STEP 4</span><span>Pick start and end points</span>
+        <div class="select">
         <select name="type" id="type">
             <option value="start">Start Point</option>
             <option value="end">End Point</option>
             <option value="wall"> wall </option>
         </select>
+        <a class="waves-effect waves-light btn-small modal-trigger" href="#modal-instructions">?</a>
+      </div>
         <!-- <input id="submit" type="submit" value="Draw Path"> -->
         <button class="waves-effect waves-light btn-small" id="submit" type="submit">Draw Path</button>
         <button class="waves-effect waves-light btn-small red accent-3" id="reset">Clear All</button>
@@ -85,6 +88,32 @@
     <p>
       <b>TIP :</b> After seeing how the algorithm solved the maze, pick a different one to see how they differ.
     </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+
+  <div id="modal-instructions" class="modal">
+    <div class="modal-content">
+      <h4>Pick Starting and ending points</h4>
+      <div>
+        <ul>
+          <li>
+            Select a starting point by selecting "Start Point", then clicking on the board, it will appear as a blue square.
+          </li>
+          <br/>
+          <li>
+            To select an ending point select "End Point", then click on the board, the end point will appear as a red square.
+          </li>
+          <br/>
+          <li>
+            To draw walls on the the board, simply select "Wall", then click and drag your mouse to draw walls on the board.
+          </li>
+        </ul>
+
+      </div>
+   
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>

@@ -43,3 +43,7 @@ form {
 #submit, #reset {
     margin:2px;
 }
+
+.select {
+    display:flex;
+}
