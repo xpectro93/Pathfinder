@@ -3,7 +3,6 @@ import DFS from "../Pathfinders/DFS.js";
 
 function finalPath (ctx,newSearch) {
     let path = newSearch.constructPath();
-    console.log(path);
     let i = 0;
     let shortestPath = setInterval(() => {
         if(i === path.length - 1) { 

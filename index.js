@@ -137,6 +137,7 @@ function change (e, isMobile = false) {
 
 
 function clicked (e) {
+
     let mouseX = e.offsetX;
     let mouseY = e.offsetY;
     if(type.value !== "wall"){
@@ -168,7 +169,7 @@ function reset() {
     //to cancel all setIntervals from previous drawing
     let id = window.setInterval(()=>{}, 0);
     while (id--) window.clearInterval(id);
-    type.value = "wall";
+    type.value = "start";
     drawingGrid = []
     position = {};
     ctx.clearRect(0, 0, minDim, minDim);
