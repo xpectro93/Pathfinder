@@ -1,7 +1,8 @@
-import {usePathfinder } from './Helpers/pathHelper.js'
+import { usePathfinder, useDFS } from './Helpers/pathHelper.js'
 import { drawInstructions, changePixelType , createBoard } from './helper.js'
 import Dijkstra from './Pathfinders/Dijkstra.js';
 import AStar from './Pathfinders/AStar.js';
+
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
 let ctx = canvas.getContext('2d');
@@ -98,6 +99,9 @@ form.addEventListener('submit', e=> {
 
             usePathfinder(Dijkstra,position.start, position.end, drawingGrid,ctx);
         }
+        else if(algoType.value === "DFS") {
+            useDFS(position.start, position.end, drawingGrid, ctx)
+        }
     }
 })
 //MOBILE EXPERIENCE
@@ -133,6 +137,7 @@ function change (e, isMobile = false) {
 
 
 function clicked (e) {
+
     let mouseX = e.offsetX;
     let mouseY = e.offsetY;
     if(type.value !== "wall"){
@@ -164,9 +169,11 @@ function reset() {
     //to cancel all setIntervals from previous drawing
     let id = window.setInterval(()=>{}, 0);
     while (id--) window.clearInterval(id);
-    type.value = "wall";
+    type.value = "start";
     drawingGrid = []
     position = {};
     ctx.clearRect(0, 0, minDim, minDim);
     drawInstructions(ctx, minDim) 
 }
+
+
