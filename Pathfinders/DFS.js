@@ -3,16 +3,14 @@ class DFS extends Grid{
     constructor(start, target,grid) {
         super(start,target,grid);
 
-        // this.lastVertexVisited = start;
     };
 
     step() {
-        console.log("ting tong stepping stone")
         let current = this.openSet[this.openSet.length - 1];
         this.lastVertexVisited = current;
 
         if ( current === this.target ) {
-            console.log('Task  completed');
+
             return 1;
         }
         this.openSet.pop();

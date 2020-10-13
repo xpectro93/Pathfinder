@@ -1,7 +1,8 @@
-import { usePathfinder, useDFS } from './Helpers/pathHelper.js'
+import { usePathfinder} from './Helpers/pathHelper.js'
 import { drawInstructions, changePixelType , createBoard } from './helper.js'
 import Dijkstra from './Pathfinders/Dijkstra.js';
 import AStar from './Pathfinders/AStar.js';
+import DFS from './Pathfinders/DFS.js';
 
 //Grab Canvas from DOM;
 let canvas = document.getElementById('root');
@@ -100,7 +101,7 @@ form.addEventListener('submit', e=> {
             usePathfinder(Dijkstra,position.start, position.end, drawingGrid,ctx);
         }
         else if(algoType.value === "DFS") {
-            useDFS(position.start, position.end, drawingGrid, ctx)
+            usePathfinder(DFS,position.start, position.end, drawingGrid, ctx)
         }
     }
 })
