@@ -1,4 +1,4 @@
-import { usePathfinder, useDFS } from './Helpers/pathHelper.js'
+import { usePathfinder} from './Helpers/pathHelper.js'
 import { drawInstructions, changePixelType , createBoard } from './helper.js'
 import Dijkstra from './Pathfinders/Dijkstra.js';
 import AStar from './Pathfinders/AStar.js';
