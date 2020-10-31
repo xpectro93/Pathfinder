@@ -84,7 +84,12 @@ window.addEventListener('resize',() => {
     reset();
     drawInstructions(ctx,minDim);
 });
+const algoObj = {
+    aStar:AStar,
+    dijkstra:Dijkstra,
+    DFS
 
+}
 resetBtn.addEventListener("click",reset)
 form.addEventListener('submit', e=> {
     e.preventDefault();
@@ -92,17 +97,20 @@ form.addEventListener('submit', e=> {
     //We can just add a check here to execute different searches
     if(position.start && position.end) {
 
-        if(algoType.value === "aStar") {
-            usePathfinder(AStar,position.start, position.end, drawingGrid,ctx);
+        let type = algoObj[algoType.value];
 
-        }
-        else if(algoType.value === "dijkstra") {
+        usePathfinder(type,position.start, position.end,drawingGrid,ctx);
+        // if(algoType.value === "aStar") {
+        //     usePathfinder(AStar,position.start, position.end, drawingGrid,ctx);
 
-            usePathfinder(Dijkstra,position.start, position.end, drawingGrid,ctx);
-        }
-        else if(algoType.value === "DFS") {
-            usePathfinder(DFS,position.start, position.end, drawingGrid, ctx)
-        }
+        // }
+        // else if(algoType.value === "dijkstra") {
+
+        //     usePathfinder(Dijkstra,position.start, position.end, drawingGrid,ctx);
+        // }
+        // else if(algoType.value === "DFS") {
+        //     usePathfinder(DFS,position.start, position.end, drawingGrid, ctx)
+        // }
     }
 })
 //MOBILE EXPERIENCE
