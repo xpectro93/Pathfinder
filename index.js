@@ -32,6 +32,12 @@ let SCALE = Number(gridSlider.value)
 let SIZE = minDim / Number(gridSlider.value)
 drawInstructions(ctx,minDim)
 
+const algoObj = {
+    aStar:AStar,
+    dijkstra:Dijkstra,
+    DFS
+
+}
 //start and endposition
 let position = {};
 
@@ -84,12 +90,7 @@ window.addEventListener('resize',() => {
     reset();
     drawInstructions(ctx,minDim);
 });
-const algoObj = {
-    aStar:AStar,
-    dijkstra:Dijkstra,
-    DFS
 
-}
 resetBtn.addEventListener("click",reset)
 form.addEventListener('submit', e=> {
     e.preventDefault();
@@ -100,17 +101,6 @@ form.addEventListener('submit', e=> {
         let type = algoObj[algoType.value];
 
         usePathfinder(type,position.start, position.end,drawingGrid,ctx);
-        // if(algoType.value === "aStar") {
-        //     usePathfinder(AStar,position.start, position.end, drawingGrid,ctx);
-
-        // }
-        // else if(algoType.value === "dijkstra") {
-
-        //     usePathfinder(Dijkstra,position.start, position.end, drawingGrid,ctx);
-        // }
-        // else if(algoType.value === "DFS") {
-        //     usePathfinder(DFS,position.start, position.end, drawingGrid, ctx)
-        // }
     }
 })
 //MOBILE EXPERIENCE
