@@ -11,6 +11,7 @@ body {
     margin:0;
     background-color:rgb(40, 44, 52);
 }
+
 h3 {
     text-align: center;
     margin-top:3px !important;
@@ -35,8 +36,7 @@ select {
 form {
     background-color:rgb(104, 114, 134);
     align-items: center;
-    /* margin:10px; */
-    /* max-height: 10vh; */
+
     display: flex;
     font-size:10px !important;
     flex-direction: column;
@@ -53,7 +53,18 @@ form {
     display:flex;
 }
 .btn-small {
-    margin:none !important;
     font-size: 11px !important;
-    padding: 3px!important
+    padding: 5px !important;
+    margin:10px !important; 
+
 }
+@media only screen and (max-width: 600px) {
+    form {
+        width:100vw;
+        display:flex;
+        flex-flow: row wrap;
+    }
+    h3 {
+        width:100%;
+    }
+  }
