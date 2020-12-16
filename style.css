@@ -15,6 +15,7 @@ body {
 
 label {
     color:rgb(228, 227, 227) !important;
+    padding:5px
 }
 
 h3 {
@@ -65,15 +66,8 @@ a {
     padding:7px;
     color:white;
     font-size: 15px;
+    border-radius: 2px;
 }
-/* .btn-small {
-    font-size: 11px !important;
-    padding: 5px !important;
-    margin:10px !important; 
-    text-align:center !important;
-    line-height:30px !important;
-
-} */
 @media only screen and (max-width: 600px) {
     form {
         width:100vw;
