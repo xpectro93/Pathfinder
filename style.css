@@ -12,6 +12,10 @@ body {
     background-color:rgb(40, 44, 52);
 }
 
+label {
+    color:rgb(228, 227, 227) !important;
+}
+
 h3 {
     text-align: center;
     margin-top:3px !important;
