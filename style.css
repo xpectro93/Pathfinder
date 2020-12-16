@@ -10,6 +10,7 @@ body {
     align-items:center;
     margin:0;
     background-color:rgb(40, 44, 52);
+    cursor:auto !important;
 }
 
 label {
@@ -56,12 +57,23 @@ form {
 .select {
     display:flex;
 }
-.btn-small {
+a {
+    text-align: center !important;
+}
+.button {
+    background-color: rgb(38,166,154);
+    padding:7px;
+    color:white;
+    font-size: 15px;
+}
+/* .btn-small {
     font-size: 11px !important;
     padding: 5px !important;
     margin:10px !important; 
+    text-align:center !important;
+    line-height:30px !important;
 
-}
+} */
 @media only screen and (max-width: 600px) {
     form {
         width:100vw;
@@ -70,5 +82,11 @@ form {
     }
     h3 {
         width:100%;
+    }
+    .button {
+        background-color: rgb(38,166,154);
+        padding:7px;
+        color:white;
+        font-size: 15px;
     }
   }
