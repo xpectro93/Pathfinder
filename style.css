@@ -36,7 +36,9 @@ form {
     background-color:rgb(104, 114, 134);
     align-items: center;
     /* margin:10px; */
+    /* max-height: 10vh; */
     display: flex;
+    font-size:10px !important;
     flex-direction: column;
     padding: 1%;
     border-radius: 5px;
@@ -49,4 +51,9 @@ form {
 
 .select {
     display:flex;
+}
+.btn-small {
+    margin:none !important;
+    font-size: 11px !important;
+    padding: 3px!important
 }
